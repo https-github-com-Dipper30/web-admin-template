@@ -1,16 +1,16 @@
 import { UserAction } from '@/types/store-action'
 
-const initialState: TUser | null = null
+const initialState: LoginUserData | null = null
 
-const userReducer = (preState: TUser | null = initialState, action: any): TUser | null => {
+const userReducer = (preState: LoginUserData | null = initialState, action: any): LoginUserData | null => {
   const { type, data } = action
   switch (type) {
-  case UserAction.SET_USER:
-    return { ...data }
-  case UserAction.SET_AVATAR:
-    return preState ?? null
-  default:
-    return preState
+    case UserAction.SET_USER:
+      return { ...data }
+    case UserAction.SET_AVATAR:
+      return preState
+    default:
+      return preState
   }
 }
 

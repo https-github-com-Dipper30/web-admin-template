@@ -7,11 +7,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { useAppSelector } from '@/hooks/redux'
 
 type SiderProps = {
-  collapsed: boolean,
+  collapsed: boolean
 }
 
-const Sider: React.FC<SiderProps> = (props) => {
-
+const Sider: React.FC<SiderProps> = props => {
   const [theme, changeTheme] = useTheme()
   const [rawMenu, setRawMenu] = useState<TSiderMenuItem[]>([])
   const auth: number[] = useAppSelector(state => state.user?.auth || [])
@@ -58,19 +57,15 @@ const Sider: React.FC<SiderProps> = (props) => {
   }
 
   return (
-    <div className={ `sider-container${ props.collapsed ? ' collapsed' : '' }` }>
+    <div className={`sider-container${props.collapsed ? ' collapsed' : ''}`}>
       <SiderHead collapsed={props.collapsed} />
 
-      <div className='menu-list'>
-        {
-          menu && menu.map((item, index: number) => (
-            <SiderMenuItem key={index} menuItem={item} />
-          ))
-        }
+      <div className="menu-list">
+        {menu && menu.map((item, index: number) => <SiderMenuItem key={index} menuItem={item} />)}
       </div>
 
-      <div className='sider-footer'>
-        <div className='theme-selector'>
+      <div className="sider-footer">
+        <div className="theme-selector">
           <Switch
             className={`${theme === 'dark' ? 'dark' : 'light'}`}
             checkedChildren={'黑夜'}
@@ -80,10 +75,6 @@ const Sider: React.FC<SiderProps> = (props) => {
           />
         </div>
       </div>
-      {/* <div onClick={() => navigate('')}> Home </div>
-      <div> User Items </div>
-      <div onClick={() => navigate('user')}> User </div>
-      <div onClick={() => navigate('user/list')}> Userlist </div> */}
     </div>
   )
 }

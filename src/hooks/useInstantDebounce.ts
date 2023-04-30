@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 const useDebounce = (fn: any, delay: number, dep: any[] = []) => {
-  const { current } = useRef<{ fn: any, timer: any }>({ fn, timer: null })
+  const { current } = useRef<{ fn: any; timer: any }>({ fn, timer: null })
 
   useEffect(() => {
     current.fn = fn
   }, [fn])
 
-  return useCallback(function f (...args: any) {
+  return useCallback(function f(...args: any) {
     if (current.timer === null) {
       current.fn(...args)
       current.timer = setTimeout(() => {

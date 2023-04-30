@@ -6,9 +6,9 @@ const FileSetting = lazy(() => import('@/pages/Setting/FileSetting'))
 
 const SettingRoutes = () => {
   return (
-    <Route path='setting'>
+    <Route path="setting">
       <Route index element={routeBefore(FileSetting)} />
-      <Route path='file' element={routeBefore(FileSetting)} />
+      <Route path="file" element={routeBefore(FileSetting)} />
     </Route>
   )
 }

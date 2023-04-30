@@ -2,7 +2,11 @@ import { handleResult } from '@/utils'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 const useInterval = <T>(fn: (...args: any) => any, interval: number, dep: any[] = []) => {
-  const { current } = useRef<{ fn: (...args: any) => any, timer: any, interval: number }>({ fn, timer: null, interval: 5000 })
+  const { current } = useRef<{ fn: (...args: any) => any; timer: any; interval: number }>({
+    fn,
+    timer: null,
+    interval: 5000,
+  })
   const [data, setData] = useState<T>()
   useEffect(() => {
     current.fn = fn
@@ -20,7 +24,7 @@ const useInterval = <T>(fn: (...args: any) => any, interval: number, dep: any[] 
     }
   }, [])
 
-  const cb = useCallback(function f (...args: any) {
+  const cb = useCallback(function f(...args: any) {
     if (current.timer !== null) {
       clearInterval(current.timer)
     }

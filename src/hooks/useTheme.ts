@@ -3,7 +3,6 @@ import { changeTheme as changeThemeAction } from '@/store/actions/common'
 import { useAppDispatch, useAppSelector } from './redux'
 
 const useTheme = () => {
-
   const theme = useAppSelector(state => state.common.theme)
   const dispatch = useAppDispatch()
 

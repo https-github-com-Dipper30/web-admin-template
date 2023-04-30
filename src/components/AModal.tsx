@@ -1,15 +1,15 @@
 import { Modal } from 'antd'
 
 type AModalProps = {
-  title: string,
-  visible: boolean,
-  children: JSX.Element,
+  title: string
+  visible: boolean
+  children: JSX.Element
 }
 
-const AModal: React.FC<AModalProps> = (props) => {
+const AModal: React.FC<AModalProps> = props => {
   return (
     <Modal title={props.title} visible={props.visible}>
-      { props.children }
+      {props.children}
     </Modal>
   )
 }

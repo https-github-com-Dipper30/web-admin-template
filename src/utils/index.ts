@@ -32,7 +32,7 @@ export const isSignedIn = (): boolean => {
   return Boolean(store.user && store.user?.id > 0)
 }
 
-export const getUser = (): TUser | null => {
+export const getUser = (): LoginUserData | null => {
   const store = reduxStore.getState()
   return store.user
 }
@@ -49,10 +49,10 @@ export const checkAuth = (userAuth: number[], toCheck: number[]): boolean => {
 }
 
 type HandleResultOptions = {
-  notifySuccess?: boolean,
-  notifyError?: boolean,
-  successMessage?: string,
-  errorMessage?: string,
+  notifySuccess?: boolean
+  notifyError?: boolean
+  successMessage?: string
+  errorMessage?: string
 }
 
 /**
@@ -63,14 +63,17 @@ type HandleResultOptions = {
  * @param {boolean} notifySuccess
  * @returns
  */
-export const handleResult = <T>(res: APIResponse<T>, options: HandleResultOptions = {
-  notifyError: true,
-  notifySuccess: false,
-  successMessage: '',
-  errorMessage: '',
-}) => {
+export const handleResult = <T>(
+  res: APIResponse<T>,
+  options: HandleResultOptions = {
+    notifyError: true,
+    notifySuccess: false,
+    successMessage: '',
+    errorMessage: '',
+  },
+) => {
   if (isError(res)) {
-    if (options.notifyError !== false) errorMessage(options.successMessage || res.msg)
+    if (options.notifyError !== false) errorMessage(options.errorMessage || res.msg)
     return false
   } else {
     if (options.notifySuccess) {
@@ -92,7 +95,7 @@ export const isError = (res: APIResponse<any>) => {
 export const createImage = async (imgSrc: string): Promise<CanvasImageSource> => {
   const image = new Image()
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     image.src = imgSrc
     setTimeout(() => resolve(image), 10)
   })
@@ -106,13 +109,13 @@ export const isArray = (arr: any): boolean => {
   return Object.prototype.toString.call(arr) == '[object Array]'
 }
 
-export const deepClone: (<T>(obj: T) => T) = (obj) => {
+export const deepClone: <T>(obj: T) => T = obj => {
   if (!isObject(obj) && !isArray(obj)) {
     return obj
   }
   if (isArray(obj)) {
     const arr: any = []
-    for (const o of (obj as any)) {
+    for (const o of obj as any) {
       arr.push(deepClone(o))
     }
     return arr
@@ -127,7 +130,7 @@ export const deepClone: (<T>(obj: T) => T) = (obj) => {
   return obj
 }
 
-export const uniqueArr: (<T>(arr: T[], key?: keyof T) => T[]) = (arr, key) => {
+export const uniqueArr: <T>(arr: T[], key?: keyof T) => T[] = (arr, key) => {
   if (!arr) return arr
   if (key === undefined) return [...new Set(arr)]
   const set = new Set()

@@ -7,15 +7,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 type BeforeEnterProps = {
-  children: JSX.Element,
+  children: JSX.Element
   options?: {
-    requireLogin?: boolean,
-    requireRole?: number[],
-  },
+    requireLogin?: boolean
+    requireRole?: number[]
+  }
 }
 
-const BeforeEnter: React.FC<BeforeEnterProps> = (props) => {
-
+const BeforeEnter: React.FC<BeforeEnterProps> = props => {
   const user = useSelector((state: any) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()

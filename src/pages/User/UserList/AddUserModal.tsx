@@ -6,13 +6,12 @@ import { useEffect, useState } from 'react'
 const { Option } = Select
 
 type AddUserModalProps = {
-  visible: boolean,
-  closeModal: () => void,
-  setRefresh?: (refresh: boolean) => void,
+  visible: boolean
+  closeModal: () => void
+  setRefresh?: (refresh: boolean) => void
 }
 
-const AddUserModal: React.FC<AddUserModalProps> = (props) => {
-
+const AddUserModal: React.FC<AddUserModalProps> = props => {
   const [username, setUsername] = useState<string>('')
   const [rid, setRid] = useState<number>()
   const [password, setPassword] = useState<string>('')
@@ -59,53 +58,51 @@ const AddUserModal: React.FC<AddUserModalProps> = (props) => {
 
   return (
     <Modal
-      title='新建账号'
+      title="新建账号"
       open={props.visible}
       onCancel={props.closeModal}
       footer={[
-        <Button loading={loading} key='submit' type='primary' onClick={onSubmit}>
+        <Button loading={loading} key="submit" type="primary" onClick={onSubmit}>
           添加
         </Button>,
       ]}
     >
-      <div className='row'>
-        <div className='label'> 用户名 </div>
-        <div className='input'>
-          <Input
-            placeholder='4 ~ 18 位字符'
-            value={username}
-            onInput={(e: any) => setUsername(e.target.value)}
-          />
+      <div className="row">
+        <div className="label"> 用户名 </div>
+        <div className="input">
+          <Input placeholder="4 ~ 18 位字符" value={username} onInput={(e: any) => setUsername(e.target.value)} />
         </div>
       </div>
 
-      <div className='row'>
-        <div className='label'> 密码 </div>
-        <div className='input'>
+      <div className="row">
+        <div className="label"> 密码 </div>
+        <div className="input">
           <Input
-            type='password'
-            placeholder='6 ~ 18 位密码'
+            type="password"
+            placeholder="6 ~ 18 位密码"
             value={password}
             onInput={(e: any) => setPassword(e.target.value)}
           />
         </div>
       </div>
 
-      <div className='row'>
-        <div className='label'> 用户身份 </div>
-        <div className='input'>
+      <div className="row">
+        <div className="label"> 用户身份 </div>
+        <div className="input">
           <Select
-            className='a-select'
+            className="a-select"
             style={{ width: '250px' }}
-            placeholder='选择身份'
+            placeholder="选择身份"
             onDropdownVisibleChange={(open: boolean) => open && fetchRoles()}
             value={rid}
             onChange={(e: any) => setRid(e)}
           >
-            { roleOptions.map((option) => (
-              <Option value={option.value} key={option.value}> { option.label } </Option>
-            ))
-            }
+            {roleOptions.map(option => (
+              <Option value={option.value} key={option.value}>
+                {' '}
+                {option.label}{' '}
+              </Option>
+            ))}
           </Select>
         </div>
       </div>

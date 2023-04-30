@@ -4,19 +4,18 @@ import { Button, Checkbox, Col, Input, InputNumber, Modal, Row } from 'antd'
 import { useEffect, useState } from 'react'
 
 type EditModalProps = {
-  visible: boolean,
-  roleInfo: TRoleRowInfo | undefined,
-  closeModal: () => void,
-  setRefresh: (refresh: boolean) => void,
+  visible: boolean
+  roleInfo: TRoleRowInfo | undefined
+  closeModal: () => void
+  setRefresh: (refresh: boolean) => void
 }
 
-const EditModal: React.FC<EditModalProps> = (props) => {
-
+const EditModal: React.FC<EditModalProps> = props => {
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [auth, setAuth] = useState<number[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const [allAuth, setAllAuth] = useState<{ id: number, name: string }[]>([])
+  const [allAuth, setAllAuth] = useState<{ id: number; name: string }[]>([])
 
   useEffect(() => {
     if (props.visible) fetchAuth()
@@ -63,60 +62,51 @@ const EditModal: React.FC<EditModalProps> = (props) => {
 
   return (
     <Modal
-      title='编辑权限'
+      title="编辑权限"
       open={props.visible}
       onCancel={props.closeModal}
       footer={[
-        <Button loading={loading} key='submit' type='primary' onClick={onSubmit}>
+        <Button loading={loading} key="submit" type="primary" onClick={onSubmit}>
           确认修改
         </Button>,
       ]}
     >
-      <div className='row'>
-        <div className='label'> 角色id </div>
-        <div className='input'>
-          <InputNumber
-            disabled={true}
-            value={props.roleInfo?.id}
-          />
+      <div className="row">
+        <div className="label"> 角色id </div>
+        <div className="input">
+          <InputNumber disabled={true} value={props.roleInfo?.id} />
         </div>
       </div>
 
-      <div className='row'>
-        <div className='label'> 角色名 </div>
-        <div className='input'>
-          <Input
-            placeholder='auth_name'
-            value={name}
-            onInput={(e: any) => setName(e.target.value)}
-          />
+      <div className="row">
+        <div className="label"> 角色名 </div>
+        <div className="input">
+          <Input placeholder="auth_name" value={name} onInput={(e: any) => setName(e.target.value)} />
         </div>
       </div>
 
-      <div className='row'>
-        <div className='label'> 描述 </div>
-        <div className='input'>
-          <Input
-            placeholder='description'
-            value={description}
-            onInput={(e: any) => setDescription(e.target.value)}
-          />
+      <div className="row">
+        <div className="label"> 描述 </div>
+        <div className="input">
+          <Input placeholder="description" value={description} onInput={(e: any) => setDescription(e.target.value)} />
         </div>
       </div>
 
-      <div className='row'>
-        <div className='label'> 权限 </div>
-        <div className='input'>
-          <Checkbox.Group defaultValue={props.roleInfo?.auth.map(a => a.id)} style={{ width: '100%' }} onChange={onCheckAuth}>
-            { allAuth.map(a => (
+      <div className="row">
+        <div className="label"> 权限 </div>
+        <div className="input">
+          <Checkbox.Group
+            defaultValue={props.roleInfo?.auth.map(a => a.id)}
+            style={{ width: '100%' }}
+            onChange={onCheckAuth}
+          >
+            {allAuth.map(a => (
               <Row key={a.id}>
                 <Col>
-                  <Checkbox value={a.id}>
-                    { `${a.name} # ${a.id}` }
-                  </Checkbox>
+                  <Checkbox value={a.id}>{`${a.name} # ${a.id}`}</Checkbox>
                 </Col>
               </Row>
-            )) }
+            ))}
           </Checkbox.Group>
         </div>
       </div>

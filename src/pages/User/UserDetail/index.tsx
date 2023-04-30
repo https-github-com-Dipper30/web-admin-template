@@ -9,7 +9,6 @@ import { setUser as setUserAction } from '@/store/actions/user'
 import './index.scss'
 
 const UserDetail: React.FC<any> = () => {
-
   const p = useParams()
   const [uid, setUid] = useState<number>()
   const [user, setUser] = useState<TUserRowInfo>()
@@ -55,7 +54,7 @@ const UserDetail: React.FC<any> = () => {
   }
 
   const onSubmitModification = async () => {
-    const param: { username?: string, password?: string, newPassword?: string } = {}
+    const param: { username?: string; password?: string; newPassword?: string } = {}
     if (username) param.username = username
     if (oldPassowrd) param.password = oldPassowrd
     if (password) param.newPassword = password
@@ -68,68 +67,64 @@ const UserDetail: React.FC<any> = () => {
     }
   }
 
-  const editSection = <div className='user-info'>
-    <div className='row'>
-      <div className='label'>
-        用户名
+  const editSection = (
+    <div className="user-info">
+      <div className="row">
+        <div className="label">用户名</div>
+        <div className="value">
+          <Input value={username} onInput={onUsernameInput} />
+        </div>
       </div>
-      <div className='value'>
-        <Input value={username} onInput={onUsernameInput} />
+      {editPassword ? (
+        <>
+          <div className="row">
+            <div className="label">旧密码</div>
+            <div className="value">
+              <Input type="password" value={oldPassowrd} onInput={(e: any) => setOldPassword(e.target.value)} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="label">新密码</div>
+            <div className="value">
+              <Input type="password" value={password} onInput={(e: any) => setPassword(e.target.value)} />
+            </div>
+          </div>
+        </>
+      ) : (
+        <Button onClick={() => setEditPassword(!editPassword)}> 修改密码 </Button>
+      )}
+      <div className="row">
+        <Button type="primary" onClick={onSubmitModification}>
+          {' '}
+          保存修改{' '}
+        </Button>
       </div>
     </div>
-    {
-      editPassword ? (<>
-        <div className='row'>
-          <div className='label'>
-            旧密码
-          </div>
-          <div className='value'>
-            <Input type='password' value={oldPassowrd} onInput={(e: any) => setOldPassword(e.target.value)} />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='label'>
-            新密码
-          </div>
-          <div className='value'>
-            <Input type='password' value={password} onInput={(e: any) => setPassword(e.target.value)} />
-          </div>
-        </div>
-      </>
-      ) : <Button onClick={() => setEditPassword(!editPassword)}> 修改密码 </Button>
-    }
-    <div className='row'>
-      <Button type='primary' onClick={onSubmitModification}> 保存修改 </Button>
-    </div>
-  </div>
+  )
 
-  const readOnlyInfo = <div className='user-info'>
-    <div className='row'>
-      <div className='label'>
-        用户ID
+  const readOnlyInfo = (
+    <div className="user-info">
+      <div className="row">
+        <div className="label">用户ID</div>
+        <div className="value">{user?.id}</div>
       </div>
-      <div className='value'>
-        { user?.id }
-      </div>
-    </div>
-    <div className='row'>
-      <div className='label'>
-        用户名
-      </div>
-      <div className='value'>
-        { user?.username }
+      <div className="row">
+        <div className="label">用户名</div>
+        <div className="value">{user?.username}</div>
       </div>
     </div>
-  </div>
+  )
 
   return (
-    <div className='user-detail-page'>
+    <div className="user-detail-page">
       <ABreadCrumb config={[{ text: '用户信息' }]} />
-      {
-        user?.id === myInfo?.id
-        && <Button className='edit-btn' onClick={changeEditingStatus}> { isEditing ? '取消修改' : '修改信息'} </Button>
-      }
-      { isEditing ? editSection : readOnlyInfo }
+      {user?.id === myInfo?.id && (
+        <Button className="edit-btn" onClick={changeEditingStatus}>
+          {' '}
+          {isEditing ? '取消修改' : '修改信息'}{' '}
+        </Button>
+      )}
+      {isEditing ? editSection : readOnlyInfo}
     </div>
   )
 }

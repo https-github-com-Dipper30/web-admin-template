@@ -6,7 +6,8 @@ import moment from 'moment'
 export const asyncDebounce = (fn: any, interval: number = 500) => {
   let timer: any = null
   return async (...args: any) => {
-    if (!timer) { // 立即执行
+    if (!timer) {
+      // 立即执行
       timer = setTimeout(() => {
         clearTimeout(timer)
         timer = null
@@ -30,7 +31,8 @@ export const asyncDebounce = (fn: any, interval: number = 500) => {
 export const debounce = (fn: any, interval: number = 500) => {
   let timer: any = null
   return async (...args: any) => {
-    if (!timer) { // 立即执行
+    if (!timer) {
+      // 立即执行
       timer = setTimeout(() => {
         clearTimeout(timer)
         timer = null

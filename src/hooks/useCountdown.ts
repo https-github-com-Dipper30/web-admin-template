@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 const useCountdown = (max: number) => {
-
   const [remaining, setRemaining] = useState<number>(max)
 
   const startCounting = () => {
@@ -10,8 +9,7 @@ const useCountdown = (max: number) => {
         if (c <= 0) {
           clearInterval(t)
           return max
-        }
-        else return c - 1
+        } else return c - 1
       })
     }, 1000)
   }

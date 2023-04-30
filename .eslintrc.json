@@ -6,7 +6,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
@@ -14,9 +15,9 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
-    "indent": ["error", 2],
+    "prettier/prettier": ["error"],
     "linebreak-style": [1, "unix"],
     "semi": ["error", "never"],
     "quotes": ["warn", "single"],
@@ -33,7 +34,7 @@
     "global-require": "off",
     "no-console": "warn",
     "object-curly-spacing": ["error", "always"],
-    "space-before-function-paren": ["error", "always"],
+    "space-before-function-paren": "off",
     "no-trailing-spaces": "warn",
     "space-before-blocks": ["error", "always"],
     "semi-spacing": ["error", { "before": false, "after": true }],

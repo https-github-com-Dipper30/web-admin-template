@@ -4,18 +4,17 @@ import Sider from './Sider'
 import './Layout.scss'
 
 type LayoutProps = {
-  children: any,
+  children: any
 }
 const collapsed = false
-const Layout: React.FC<LayoutProps> = (props) => {
-
+const Layout: React.FC<LayoutProps> = props => {
   // const collapsed = useSelector((state: any) => state.config.collapsed)
 
   return (
-    <div className='layout-container'>
+    <div className="layout-container">
       <Header collapsed={collapsed} />
       <Sider collapsed={collapsed} />
-      <Content collapsed={collapsed} >{ props.children }</Content>
+      <Content collapsed={collapsed}>{props.children}</Content>
     </div>
   )
 }

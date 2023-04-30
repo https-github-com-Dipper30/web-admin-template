@@ -8,10 +8,11 @@ import { getEnv } from '@/utils'
  * @param propertyDescriptor 方法描述符 === Object.getOwnPropertyDescriptor(Function.prototype, 'logdata')
  * @returns propertyDescriptor
  */
-export function logApiResult (
+export function logApiResult(
   target: any,
   propertyName: string,
-  propertyDescriptor: PropertyDescriptor): PropertyDescriptor {
+  propertyDescriptor: PropertyDescriptor,
+): PropertyDescriptor {
   if (getEnv() === ProcessEnv.PRODUCTION) {
     return propertyDescriptor
   }

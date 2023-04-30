@@ -1,6 +1,6 @@
 import ALoader from '@/components/common/ALoader'
 import APanel from '@/components/snippets/APanel'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { homeApi } from '@/api'
 import { handleResult } from '@/utils'
 import './index.scss'
@@ -26,6 +26,7 @@ import { LabelLayout, UniversalTransition } from 'echarts/features'
 // Note that including the CanvasRenderer or SVGRenderer is a required step
 import { CanvasRenderer } from 'echarts/renderers'
 import { generateDateByTs } from '@/utils/tools'
+import useQuery from '@/hooks/useQuery'
 
 // Register the required components
 echarts.use([
@@ -41,39 +42,17 @@ echarts.use([
   LineChart,
 ])
 
+type ChartOptions = {
+  xData?: string[]
+  yData?: number[]
+}
+
 let timer: any = null
 
 const Home: React.FC<any> = () => {
-
-  const [isLoading, setIsloading] = useState<boolean>(false)
-  const [currentActiveUsers, setCurretnActiveUsers] = useState<TUserProfile[]>([])
+  const [currentActiveUsers, setCurrentActiveUsers] = useState<TUserProfile[]>([])
   const dauChart = useRef<any>()
   const mauChart = useRef<any>()
-
-  const [dau, setDau] = useState<number[][]>([])
-  const [mau, setMau] = useState<number[][]>([])
-
-  const dauOptions = useMemo(() => {
-    const xData = dau.map(([ts, total]) => {
-      return generateDateByTs(ts * 1000, 'MM-DD')
-    })
-    const yData = dau.map(([ts, total]) => total)
-    return {
-      xData,
-      yData,
-    }
-  }, [dau])
-
-  const mauOptions = useMemo(() => {
-    const xData = mau.map(([ts, total]) => {
-      return generateDateByTs(ts * 1000, 'M') + '月'
-    })
-    const yData = mau.map(([ts, total]) => total)
-    return {
-      xData,
-      yData,
-    }
-  }, [dau])
 
   // const queryCurrentActiveUsers = useInterval(homeApi.getCurrentActiveUsers, 5000, [])
   useEffect(() => {
@@ -89,36 +68,45 @@ const Home: React.FC<any> = () => {
     initDiagram()
   }, [])
 
-  const initDiagram = () => {
-    queryDailyActiveUsers()
-    queryCurrentActiveUsers()
-    queryMonthlyActiveUsers()
-    initDau()
-    initMau()
-  }
-
   const queryCurrentActiveUsers = async () => {
     const res = await homeApi.getCurrentActiveUsers()
     if (handleResult(res)) {
-      setCurretnActiveUsers(res.data.users)
+      setCurrentActiveUsers(res.data.users)
     }
   }
 
-  const queryDailyActiveUsers = async () => {
-    const res = await homeApi.getDailyActiveUsers()
-    if (handleResult(res)) {
-      setDau(res.data.dau)
-    }
-  }
+  // 图表数据请求
+  const [queryMonthlyActiveUsers, mauData, isLoadingMau] = useQuery(homeApi.getMonthlyActiveUsers)
+  const mau = useMemo(() => mauData?.mau, [mauData])
 
-  const queryMonthlyActiveUsers = async () => {
-    const res = await homeApi.getMonthlyActiveUsers()
-    if (handleResult(res)) {
-      setMau(res.data.mau)
-    }
-  }
+  const [queryDailyActiveUsers, dauData, isLoadingDau] = useQuery(homeApi.getDailyActiveUsers)
+  const dau = useMemo(() => dauData?.dau, [dauData])
 
-  const initDau = () => {
+  const dauOptions = useMemo(() => {
+    if (!dau) return {}
+    const xData = dau.map(([ts, total]) => {
+      return generateDateByTs(ts * 1000, 'MM-DD')
+    })
+    const yData = dau.map(([ts, total]) => total)
+    return {
+      xData,
+      yData,
+    }
+  }, [dauData])
+
+  const mauOptions = useMemo(() => {
+    if (!mau) return {}
+    const xData = mau.map(([ts, total]) => {
+      return generateDateByTs(ts * 1000, 'M') + '月'
+    })
+    const yData = mau.map(([ts, total]) => total)
+    return {
+      xData,
+      yData,
+    }
+  }, [mau])
+
+  const initDau = (dauOptions: ChartOptions) => {
     if (!dauChart.current) dauChart.current = echarts.init(document.getElementById('daily-active-user') as HTMLElement)
     dauChart.current.setOption({
       xAxis: {
@@ -150,8 +138,9 @@ const Home: React.FC<any> = () => {
     })
   }
 
-  const initMau = () => {
-    if (!mauChart.current) mauChart.current = echarts.init(document.getElementById('monthly-active-user') as HTMLElement)
+  const initMau = (mauOptions: ChartOptions) => {
+    if (!mauChart.current)
+      mauChart.current = echarts.init(document.getElementById('monthly-active-user') as HTMLElement)
     mauChart.current.setOption({
       xAxis: {
         type: 'category',
@@ -183,28 +172,38 @@ const Home: React.FC<any> = () => {
   }
 
   useEffect(() => {
-    if (!dauChart.current) initDau()
-    dauChart.current.setOption({
-      xAxis: {
-        data: dauOptions.xData,
-      },
-      series: [{
-        data: dauOptions.yData,
-      }],
-    })
-  }, [dauOptions])
+    if (!dauChart.current) initDau(dauOptions)
+    else {
+      dauChart.current.setOption({
+        xAxis: {
+          data: dauOptions.xData,
+        },
+        series: [
+          {
+            data: dauOptions.yData,
+          },
+        ],
+      })
+    }
+  }, [dauOptions, dau])
 
   useEffect(() => {
-    if (!mauChart.current) initDau()
-    mauChart.current.setOption({
-      xAxis: {
-        data: mauOptions.xData,
-      },
-      series: [{
-        data: mauOptions.yData,
-      }],
-    })
-  }, [mauOptions])
+    if (!mauChart.current) initMau(mauOptions)
+    else {
+      mauChart.current.setOption({
+        xAxis: {
+          data: mauOptions.xData,
+        },
+        series: [
+          {
+            data: mauOptions.yData,
+          },
+        ],
+      })
+    }
+  }, [mauOptions, mau])
+
+  const isLoading = useMemo(() => isLoadingDau || isLoadingMau, [isLoadingDau, isLoadingMau])
 
   useEffect(() => {
     window.addEventListener('resize', resize)
@@ -213,37 +212,34 @@ const Home: React.FC<any> = () => {
     }
   }, [])
 
-  const resize = () => {
+  const resize = useCallback(() => {
     if (dauChart.current) dauChart.current.resize()
     if (mauChart.current) mauChart.current.resize()
+  }, [dauChart, mauChart, dauOptions, mauOptions])
+
+  const initDiagram = () => {
+    queryDailyActiveUsers()
+    queryCurrentActiveUsers()
+    queryMonthlyActiveUsers()
   }
 
   return (
-    <div className='home-page'>
-      {
-        isLoading && <ALoader size='large' />
-      }
-      {
-        !isLoading && (
-          <div>
-            <APanel title='当前在线用户'>
-              <div className='user-list'>
-                <span className='count'>
-                  { currentActiveUsers.length } 人
-                </span>
+    <div className="home-page">
+      {isLoading && <ALoader size="large" />}
 
-              </div>
-            </APanel>
-            <APanel title='过去一周日活'>
-              <div id='daily-active-user' className='graph' />
-            </APanel>
-            <APanel title='过去半年月活'>
-              <div id='monthly-active-user' className='graph' />
-            </APanel>
+      <div>
+        <APanel title="当前在线用户">
+          <div className="user-list">
+            <span className="count">{currentActiveUsers.length} 人</span>
           </div>
-
-        )
-      }
+        </APanel>
+        <APanel title="过去一周日活">
+          <div id="daily-active-user" className="graph" />
+        </APanel>
+        <APanel title="过去半年月活">
+          <div id="monthly-active-user" className="graph" />
+        </APanel>
+      </div>
     </div>
   )
 }

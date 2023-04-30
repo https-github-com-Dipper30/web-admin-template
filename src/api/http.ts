@@ -15,28 +15,26 @@ export const http = axios.create({
 
 http.defaults.headers.post['Content-Type'] = 'application/json'
 
-http.interceptors.request.use(
-  (config: any) => {
-    const token = getToken()
-    config.headers.token = token
-    return config
-  },
-)
+http.interceptors.request.use((config: any) => {
+  const token = getToken()
+  config.headers.token = token
+  return config
+})
 
 http.interceptors.response.use(
   (response: any) => {
     const { data } = response
     const { code, msg } = data
     switch (code) {
-    // define your own Exception Code handler here
-    case 200:
-    case 201:
-      return data
-    case 1003:
-      errorMessage('Not Authorized')
-      return { code, msg }
-    default:
-      return data
+      // define your own Exception Code handler here
+      case 200:
+      case 201:
+        return data
+      case 1003:
+        errorMessage('Not Authorized')
+        return { code, msg }
+      default:
+        return data
     }
   },
   (error: Error) => error,
@@ -50,7 +48,7 @@ export const $get = (url: string, params?: any): Promise<APIResponse<any>> => {
   let count = 1
   for (const attr in params) {
     url += count == 1 ? '?' : '&'
-    url += (attr + '=' + params[attr])
+    url += attr + '=' + params[attr]
     count++
   }
   return http.get(url)

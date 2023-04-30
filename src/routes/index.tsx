@@ -14,8 +14,8 @@ import useTheme from '@/hooks/useTheme'
 // import SettingRoutes from './SettingRoutes'
 
 type RouteOption = {
-  requireLogin?: boolean,
-  requireRole?: number[],
+  requireLogin?: boolean
+  requireRole?: number[]
 }
 
 export const routeBefore = (Node: LazyExoticComponent<FC<any>>, options?: RouteOption) => (
@@ -33,41 +33,44 @@ export const lazyComponent = (Node: LazyExoticComponent<FC<any>>) => (
 )
 
 const Router: React.FC = () => {
-
   const [theme, changeTheme] = useTheme()
 
   useEffect(() => {
     const localTheme = localStorage.getItem('theme')
-    if (localTheme && localTheme == 'dark' || localTheme == 'light' && theme != localTheme) {
+    if ((localTheme && localTheme == 'dark') || (localTheme == 'light' && theme != localTheme)) {
       changeTheme(localTheme)
     } else if (!localTheme) {
       changeTheme('dark')
     }
   }, [theme])
 
-  const LayourRouter =
-  <BeforeEnter options={{ requireLogin: true, requireRole: [1, 2] }}>
-    <Layout> <Outlet /> </Layout>
-  </BeforeEnter>
+  const LayourRouter = (
+    <BeforeEnter options={{ requireLogin: true, requireRole: [1, 2] }}>
+      <Layout>
+        {' '}
+        <Outlet />{' '}
+      </Layout>
+    </BeforeEnter>
+  )
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/passport' element={<Passport />} />
-        <Route path='/' element={LayourRouter}>
+        <Route path="/passport" element={<Passport />} />
+        <Route path="/" element={LayourRouter}>
           {/* home */}
           {/* routeBefore(Home, { requireLogin: true, requireRole: [1, 2] }) */}
           <Route index key={1} element={<Home />} />
-          <Route path='home' key={1} element={<Home />} />
+          <Route path="home" key={1} element={<Home />} />
 
           {/* user */}
-          { UserRoutes() }
+          {UserRoutes()}
 
           {/* auth */}
-          { AuthRoutes() }
+          {AuthRoutes()}
         </Route>
 
-        <Route path='*' element={<Page404 />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
   )

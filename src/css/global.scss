@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "aptxfont";
-  src: url("../assets/fonts/AaWeiTaNingMengCha-2.ttf") format("ttf");
+  font-family: 'aptxfont';
+  src: url('../assets/fonts/AaWeiTaNingMengCha-2.ttf') format('ttf');
 }
 
 // $surface: var(--surface, #111);
@@ -25,44 +25,44 @@ $black: #000;
 $border: #7e7e7e;
 $placeholder: #6c6c6c;
 
-$surface1: var(--surface1, "#141414");
-$surface2: var(--surface2, "#141414");
-$surface3: var(--surface3, "#141414");
-$surface_hover_dark: var(--surface_hover_dark, "#141414");
-$surface_hover_light: var(--surface_hover_light, "#ffffff");
+$surface1: var(--surface1, '#141414');
+$surface2: var(--surface2, '#141414');
+$surface3: var(--surface3, '#141414');
+$surface_hover_dark: var(--surface_hover_dark, '#141414');
+$surface_hover_light: var(--surface_hover_light, '#ffffff');
 
-$text1: var(--text1, "#141414");
-$text2: var(--text2, "#141414");
-$text3: var(--text3, "#141414");
+$text1: var(--text1, '#141414');
+$text2: var(--text2, '#141414');
+$text3: var(--text3, '#141414');
 
 // 元素主色
-$prime1: var(--prime1, "#141414");
-$prime2: var(--prime2, "#141414");
-$prime3: var(--prime3, "#141414");
-$prime_hover: var(--prime_hover, "#141414");
+$prime1: var(--prime1, '#141414');
+$prime2: var(--prime2, '#141414');
+$prime3: var(--prime3, '#141414');
+$prime_hover: var(--prime_hover, '#141414');
 
 // 元素辅色
-$second1: var(--second1, "#141414");
-$second2: var(--second2, "#141414");
-$second3: var(--second3, "#141414");
-$second_hover: var(--second_hover, "#141414");
+$second1: var(--second1, '#141414');
+$second2: var(--second2, '#141414');
+$second3: var(--second3, '#141414');
+$second_hover: var(--second_hover, '#141414');
 
 // 边框
-$border_dark: var(--border_dark, "#141414");
-$border_light: var(--border_light, "#141414");
-$green: var(--green, "#141414");
-$green_hover: var(--green_hover, "#141414");
-$pink: var(--pink, "#141414");
-$blue: var(--blue, "#141414");
-$red: var(--red, "#141414");
-$grey: var(--grey, "#8c8c8c");
+$border_dark: var(--border_dark, '#141414');
+$border_light: var(--border_light, '#141414');
+$green: var(--green, '#141414');
+$green_hover: var(--green_hover, '#141414');
+$pink: var(--pink, '#141414');
+$blue: var(--blue, '#141414');
+$red: var(--red, '#141414');
+$grey: var(--grey, '#8c8c8c');
 $black: #000000;
 $white: #ffffff;
 
 // 边栏
-$sider1: var(--sider1, "#141414");
-$sider2: var(--sider2, "#141414");
-$sider3: var(--sider3, "#141414");
+$sider1: var(--sider1, '#141414');
+$sider2: var(--sider2, '#141414');
+$sider3: var(--sider3, '#141414');
 
 $error-red: rgb(195, 55, 55);
 
@@ -70,16 +70,14 @@ $header-height: 60px;
 
 body {
   margin: 0;
-  font-family: "aptxfont", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: 'aptxfont', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Monaco, Menlo, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Monaco, Menlo, Consolas, 'Courier New', monospace;
 }
 
 .non-scroller {
@@ -96,7 +94,7 @@ code {
 }
 
 .delete-icon {
-  font-size: "22px";
+  font-size: '22px';
   color: $red;
   cursor: pointer;
 }

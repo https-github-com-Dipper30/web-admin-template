@@ -7,35 +7,20 @@ export enum PROCESS_ENV {
   PRODUCTION = 'production',
 }
 
-export enum FRIEND_APPLICATION_STATUS {
-  PENDING = 'pending',
-  ACCEPTED = 'accepted',
-  DENIED = 'denied',
-  REVOKED = 'revoked',
-  EXPIRED = 'expired',
-  BLOCKED = 'blocked',
+export enum AuthCode {
+  LOGIN_ADMIN = 1,
+  CREATE_ACCOUNT = 5,
+  MODIFY_AUTH = 10,
+  MODIFY_ACCOUNT = 15,
+  LOGIN_BUZ = 1000,
+  LOGIN_CLIENT = 2000,
 }
 
-export enum FRIEND_APPLICATION_ACTION {
-  BLOCK = 'block',
-  REVOKE = 'revoke',
-  DENY = 'deny',
-  ACCEPT = 'accept',
-  UNBLOCK = 'unblock',
-}
-
-export enum FRIEND_STATUS {
-  ONLINE = 'Online',
-  ALL = 'All',
-  PENDING = 'Pending',
-  BLOCKED = 'Blocked',
-}
-
-export enum USER_STATUS {
-  ONLINE = 'online',
-  IN_GAME = 'ingame',
-  OFFLINE = 'offline',
-  IDLE = 'idle',
+export enum RoleCode {
+  SUPER_ADMIN = 1,
+  ADMIN = 2,
+  BUZ = 50,
+  USER = 100,
 }
 
 export enum ImageType {

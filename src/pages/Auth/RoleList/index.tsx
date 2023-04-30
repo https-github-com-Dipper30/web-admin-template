@@ -10,13 +10,17 @@ import { configApi } from '@/api'
 import { handleResult } from '@/utils'
 import AddModal from './AddModal'
 import EditModal from './EditModal'
+import usePageCode from '@/hooks/usePageCode'
+import { MenuPageCode } from '@/config/sider-menu'
+import { AuthCode } from '@/config/constants'
 
 const RoleList: React.FC<any> = () => {
-
   const [refresh, setRefresh] = useState<boolean>(false)
   const [addModalVisible, setAddModalVisible] = useState<boolean>(false)
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<TRoleRowInfo>()
+
+  const breadcrumb = usePageCode(MenuPageCode.ROLE_LIST)
 
   const columnsConfig: ColumnsType<any> = [
     {
@@ -25,66 +29,71 @@ const RoleList: React.FC<any> = () => {
       width: 30,
       fixed: 'left',
       ellipsis: true,
-      render: (item: any, record: any, index: number) => (<>{ index + 1 }</>),
+      render: (item: any, record: any, index: number) => <>{index + 1}</>,
     },
     {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
       width: 45,
-      render: (id: string) => <span>{ id }</span>,
+      render: (id: string) => <span>{id}</span>,
     },
     {
       title: '角色名',
       dataIndex: 'name',
       key: 'name',
       width: 150,
-      render: (name: string) => <span>{ name }</span>,
+      render: (name: string) => <span>{name}</span>,
     },
     {
       title: '描述',
       dataIndex: 'description',
       key: 'description',
       width: 250,
-      render: (description: string) => <span>{ description }</span>,
+      render: (description: string) => <span>{description}</span>,
     },
     {
       title: '权限',
       dataIndex: 'auth',
       key: 'auth',
       width: 250,
-      render: (auth: any[]) =>
-        <AAuthElement auth={[3]} fallback={<> - </>}>
-          <>{ auth.map(a => <div key={a.id}> { a.name } </div> ) }</>
-        </AAuthElement>,
+      render: (auth: any[]) => (
+        <AAuthElement auth={[AuthCode.MODIFY_AUTH]} fallback={<> - </>}>
+          <>
+            {auth.map(a => (
+              <div key={a.id}> {a.name} </div>
+            ))}
+          </>
+        </AAuthElement>
+      ),
     },
     {
       title: '选项',
       key: 'options',
       width: 150,
       fixed: 'right',
-      render: (row: any) => <div className='a-table-options'>
-        <AAuthElement className='a-table-option-col' auth={[3]}>
-          <Button onClick= {() => onEditingAuth(row)}> 编辑角色 </Button>
-        </AAuthElement>
-        <AAuthElement className='a-table-option-col' auth={[3]}>
-          <Popconfirm
-            title='确认删除该角色吗?'
-            onConfirm={() => deleteRole(row.id)}
-            okText='确认'
-            cancelText='点错了~'
-          >
-            <Button danger type='primary' shape='circle' icon={<DeleteOutlined />} />
-          </Popconfirm>
-        </AAuthElement>
-      </div>,
+      render: (row: any) => (
+        <div className="a-table-options">
+          <AAuthElement className="a-table-option-col" auth={[AuthCode.MODIFY_AUTH]}>
+            <Button onClick={() => onEditingAuth(row)}> 编辑角色 </Button>
+          </AAuthElement>
+          <AAuthElement className="a-table-option-col" auth={[AuthCode.MODIFY_AUTH]}>
+            <Popconfirm
+              title="确认删除该角色吗?"
+              onConfirm={() => deleteRole(row.id)}
+              okText="确认"
+              cancelText="点错了~"
+            >
+              <Button danger type="primary" shape="circle" icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </AAuthElement>
+        </div>
+      ),
     },
   ]
 
   const config: ATableConfig = {
-    filter: {
-
-    },
+    filter: {},
     filterOptions: [
       {
         type: 'inputNumber',
@@ -101,7 +110,7 @@ const RoleList: React.FC<any> = () => {
       buttons: [
         {
           label: '添加角色',
-          auth: [3],
+          auth: [AuthCode.MODIFY_AUTH],
           eventName: 'showAddModal',
         },
       ],
@@ -137,14 +146,10 @@ const RoleList: React.FC<any> = () => {
   const showAddModal = () => setAddModalVisible(true)
 
   return (
-    <div className='role-list-page'>
-      <ABreadCrumb config={[{ text: '角色列表' }]} />
+    <div className="role-list-page">
+      <ABreadCrumb config={breadcrumb} />
 
-      <AddModal
-        visible={addModalVisible}
-        setRefresh={setRefresh}
-        closeModal={() => setAddModalVisible(false)}
-      />
+      <AddModal visible={addModalVisible} setRefresh={setRefresh} closeModal={() => setAddModalVisible(false)} />
 
       <EditModal
         visible={editModalVisible}
@@ -162,7 +167,6 @@ const RoleList: React.FC<any> = () => {
           showAddModal,
         }}
       />
-
     </div>
   )
 }

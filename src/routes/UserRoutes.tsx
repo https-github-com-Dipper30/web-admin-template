@@ -7,10 +7,10 @@ const UserDetail = lazy(() => import('@/pages/User/UserDetail'))
 
 const UserRoutes = () => {
   return (
-    <Route key={2} path='user'>
+    <Route key={2} path="user">
       <Route index element={lazyComponent(UserList)} />
-      <Route path='list' element={lazyComponent(UserList)} />
-      <Route path=':id' element={routeBefore(UserDetail)} />
+      <Route path="list" element={lazyComponent(UserList)} />
+      <Route path=":id" element={routeBefore(UserDetail)} />
     </Route>
   )
 }

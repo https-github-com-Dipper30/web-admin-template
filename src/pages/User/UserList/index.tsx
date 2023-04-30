@@ -13,14 +13,18 @@ import AddUserModal from './AddUserModal'
 import { useNavigate } from 'react-router-dom'
 import AAuthElement from '@/components/snippets/AAuthElement'
 import { DeleteOutlined } from '@ant-design/icons'
+import usePageCode from '@/hooks/usePageCode'
+import { MenuPageCode, findMenu } from '@/config/sider-menu'
+import { AuthCode } from '@/config/constants'
 
 const UserList: React.FC<any> = () => {
-
   const [refresh, setRefresh] = useState<boolean>(false)
   const [addModalVisible, setAddModalVisible] = useState<boolean>(false)
   const [checkAuthModalVisible, setCheckAuthModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<TUserRowInfo>()
   const navigate = useNavigate()
+
+  const breadcrumb = usePageCode(MenuPageCode.USER_LIST)
 
   const columnsConfig: ColumnsType<any> = [
     {
@@ -29,7 +33,7 @@ const UserList: React.FC<any> = () => {
       key: 'index',
       width: 30,
       fixed: 'left',
-      render: (item: any, record: any, index: number) => (<>{ index + 1 }</>),
+      render: (item: any, record: any, index: number) => <>{index + 1}</>,
     },
     {
       title: 'ID',
@@ -55,50 +59,61 @@ const UserList: React.FC<any> = () => {
       dataIndex: 'role',
       key: 'role',
       width: 100,
-      render: (role: { id: number, name: string }) => <UserTag role={role} />,
+      render: (role: { id: number; name: string }) => <UserTag role={role} />,
     },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 100,
-      render: (ts: number) => <span> { generateDateByTs(ts, '20YY-MM-DD') } </span>,
+      render: (ts: number) => <span> {generateDateByTs(ts, '20YY-MM-DD')} </span>,
     },
     {
       title: '创建人',
       dataIndex: 'creator',
       key: 'creator',
       width: 100,
-      render: (creator: { id: number, username: string } | null) => <>
-        { creator ? (
-          <span className='hoverable' onClick={() => onUserDetail(creator.id)}> { creator.username } </span>
-        ) : <> - </>}
-      </>,
+      render: (creator: { id: number; username: string } | null) => (
+        <>
+          {creator ? (
+            <span className="hoverable" onClick={() => onUserDetail(creator.id)}>
+              {' '}
+              {creator.username}{' '}
+            </span>
+          ) : (
+            <> - </>
+          )}
+        </>
+      ),
     },
     {
       title: '选项',
       key: 'options',
       width: 100,
       fixed: 'right',
-      render: (row: TUserRowInfo) => <div className='a-table-options'>
-        <Button className='a-table-option-col' onClick={() => checkAuth(row)}> 查看权限 </Button>
-        <AAuthElement className='a-table-option-col' auth={[1]}>
-          <Popconfirm
-            title='确认删除该用户吗?'
-            onConfirm={() => deleteUser(row.id)}
-            okText='确认'
-            cancelText='点错了~'
-          >
-            <Button danger type='primary' shape='circle' icon={<DeleteOutlined />} />
-          </Popconfirm>
-        </AAuthElement>
-      </div>,
+      render: (row: TUserRowInfo) => (
+        <div className="a-table-options">
+          <Button className="a-table-option-col" onClick={() => checkAuth(row)}>
+            {' '}
+            查看权限{' '}
+          </Button>
+          <AAuthElement className="a-table-option-col" auth={[AuthCode.LOGIN_ADMIN]}>
+            <Popconfirm
+              title="确认删除该用户吗?"
+              onConfirm={() => deleteUser(row.id)}
+              okText="确认"
+              cancelText="点错了~"
+            >
+              <Button danger type="primary" shape="circle" icon={<DeleteOutlined />} />
+            </Popconfirm>
+          </AAuthElement>
+        </div>
+      ),
     },
   ]
 
   const config: ATableConfig = {
-    filter: {
-    },
+    filter: {},
     filterOptions: [
       {
         type: 'inputNumber',
@@ -137,7 +152,7 @@ const UserList: React.FC<any> = () => {
         {
           label: '创建用户',
           eventName: 'showAddModal',
-          auth: [2],
+          auth: [AuthCode.CREATE_ACCOUNT],
         },
       ],
     },
@@ -159,7 +174,7 @@ const UserList: React.FC<any> = () => {
     return roleOptions
   }
 
-  const fetchData = async (filter: any): Promise<{ data: any[], total: number }> => {
+  const fetchData = async (filter: any): Promise<{ data: any[]; total: number }> => {
     const res = await configApi.getUsers(filter)
     if (!handleResult(res)) return { data: [], total: 0 }
     else {
@@ -184,14 +199,10 @@ const UserList: React.FC<any> = () => {
   }
 
   return (
-    <div className='user-list-page'>
-      <ABreadCrumb config={[{ text: '用户列表' }]} />
+    <div className="user-list-page">
+      <ABreadCrumb config={breadcrumb} />
 
-      <AddUserModal
-        visible={addModalVisible}
-        closeModal={() => setAddModalVisible(false)}
-        setRefresh={setRefresh}
-      />
+      <AddUserModal visible={addModalVisible} closeModal={() => setAddModalVisible(false)} setRefresh={setRefresh} />
 
       <CheckAuthModal
         visible={checkAuthModalVisible}

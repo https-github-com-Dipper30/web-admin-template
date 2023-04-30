@@ -45,78 +45,79 @@ type TThemeProperty = {
 }
 
 type TThemeType = {
-  light: TThemeProperty,
-  dark: TThemeProperty,
+  light: TThemeProperty
+  dark: TThemeProperty
 }
 
 type TUser = {
-  id: number,
-  username: string,
-  auth: [],
-  avatar?: string,
+  id: number
+  username: string
+  auth: []
+  avatar?: string
   role: {
-    id: number,
-    name: string,
-  },
+    id: number
+    name: string
+  }
 }
 
 type TUserProfile = {
-  id: number,
-  username: string,
-  avatar?: string,
+  id: number
+  username: string
+  avatar?: string
 }
 
 type TCommon = {
-  selectedMenu: number,
-  menuCollapsed: boolean,
-  theme: Theme,
+  selectedMenu: number
+  menuCollapsed: boolean
+  theme: Theme
 }
 
 type TStoreAction<T, D> = {
-  type: T,
-  data: D,
+  type: T
+  data: D
 }
 
 type TSiderMenuItem = {
-  id: number,
-  name: string,
-  abbr: string,
-  auth?: number[],
-  icon: any,
-  path?: string,
-  children?: SiderMenuItem[],
+  id: number
+  name: string
+  abbr: string
+  auth?: number[]
+  breadcrumb?: ABreadCrumbConfig[]
+  icon?: any
+  path?: string
+  children?: TSiderMenuItem[]
 }
 
 type TPager = {
-  page: number,
-  size: number,
+  page: number
+  size: number
 }
 
 type TUserRowInfo = {
-  id: number,
-  username: string,
-  destroyed: boolean,
+  id: number
+  username: string
+  destroyed: boolean
   role: {
-    id: number,
-    name: string,
-    description: string,
-  },
+    id: number
+    name: string
+    description: string
+  }
   auth: {
-    id: number,
-    name: string,
-    description: string,
-  }[],
+    id: number
+    name: string
+    description: string
+  }[]
 }
 
 type TRoleRowInfo = {
-  id: number,
-  name: string,
-  description: string,
-  auth: TAuthRowInfo[],
+  id: number
+  name: string
+  description: string
+  auth: TAuthRowInfo[]
 }
 
 type TAuthRowInfo = {
-  id: number,
-  name: string,
-  description: string,
+  id: number
+  name: string
+  description: string
 }

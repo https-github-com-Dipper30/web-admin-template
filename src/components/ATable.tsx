@@ -8,19 +8,18 @@ import { useAppSelector } from '@/hooks/redux'
 const { Option } = Select
 
 type ATableProps = {
-  config: ATableConfig,
-  columns?: ColumnsType<any>,
-  data?: any[],
-  fetchData: (p?: any) => Promise<{ data: any[], total: number }>,
-  fns: any,
-  refresh?: boolean,
-  setRefresh?: any,
-  pagination?: boolean,
-  defaultPager?: { page: number, size: number },
+  config: ATableConfig
+  columns?: ColumnsType<any>
+  data?: any[]
+  fetchData: (p?: any) => Promise<{ data: any[]; total: number }>
+  fns: any
+  refresh?: boolean
+  setRefresh?: any
+  pagination?: boolean
+  defaultPager?: { page: number; size: number }
 }
 
-const ATable: React.FC<ATableProps> = (props) => {
-
+const ATable: React.FC<ATableProps> = props => {
   const defaultWidth = 150
   const [isLoading, setIsLoading] = useState<boolean>()
   const [tableData, setTableData] = useState<any>([])
@@ -89,108 +88,115 @@ const ATable: React.FC<ATableProps> = (props) => {
   }
 
   const filterOptions = props.config.filterOptions?.map((config, index) => {
-
     let inputElement = <></>
 
     switch (config.type) {
-    case 'input':
-      inputElement = (
-        <Input
-          value={filter[config.value]}
-          placeholder={config.placeholder ?? ''}
-          onChange={(e: any) => {
-            setFilter({ ...filter, [config.value]: e.target.value })
-          }}
-        />
-      )
-      break
-    case 'inputNumber':
-      inputElement = (
-        <InputNumber
-          style={{ width: config.options?.width ?? defaultWidth }}
-          key={config.value}
-          min={config.options?.min ?? 0}
-          max={config.options?.max ?? Number.MAX_SAFE_INTEGER}
-          value={filter[config.value]}
-          onChange={(e: any) => {
-            setFilter({ ...filter, [config.value]: e })
-          }}
-        />
-      )
-      break
-    case 'selector':
-      if (config.dynamic) { // 动态下拉列表
+      case 'input':
         inputElement = (
-          <Select
+          <Input
+            value={filter[config.value]}
+            placeholder={config.placeholder ?? ''}
+            onChange={(e: any) => {
+              setFilter({ ...filter, [config.value]: e.target.value })
+            }}
+          />
+        )
+        break
+      case 'inputNumber':
+        inputElement = (
+          <InputNumber
             style={{ width: config.options?.width ?? defaultWidth }}
             key={config.value}
-            placeholder={config.placeholder ?? ''}
+            min={config.options?.min ?? 0}
+            max={config.options?.max ?? Number.MAX_SAFE_INTEGER}
             value={filter[config.value]}
-            popupClassName='a-select-popup'
-            className='a-select'
-            onChange={(e: any) => setFilter({ ...filter, [config.value]: e })}
-            onDropdownVisibleChange={(open: boolean) =>
-              open && fetchOptions(config.dynamic, config.optionName)}
-          >
-            { options[config.optionName as string].map((option: SelectorOptionConfig) =>
-              <Option value={option.value} key={option.value}> { option.label } </Option>,
-            ) }
-          </Select>
+            onChange={(e: any) => {
+              setFilter({ ...filter, [config.value]: e })
+            }}
+          />
         )
-      } else inputElement = (
-        <Select
-          key={config.value}
-          placeholder={config.placeholder ?? ''}
-          value={filter[config.value]}
-          onChange={(e: any) => setFilter({ ...filter, [config.value]: e })}
-          style={{ width: config.options?.width ?? defaultWidth }}
-          popupClassName='a-select-popup'
-          className='a-select'
-        >
-          { (config.selections as SelectorOptionConfig[]).map((option: SelectorOptionConfig) =>
-            <Option value={option.value} key={option.value}> { option.label } </Option>,
-          ) }
-        </Select>
-      )
-      break
-    default:
-      break
+        break
+      case 'selector':
+        if (config.dynamic) {
+          // 动态下拉列表
+          inputElement = (
+            <Select
+              style={{ width: config.options?.width ?? defaultWidth }}
+              key={config.value}
+              placeholder={config.placeholder ?? ''}
+              value={filter[config.value]}
+              popupClassName="a-select-popup"
+              className="a-select"
+              onChange={(e: any) => setFilter({ ...filter, [config.value]: e })}
+              onDropdownVisibleChange={(open: boolean) => open && fetchOptions(config.dynamic, config.optionName)}
+            >
+              {options[config.optionName as string].map((option: SelectorOptionConfig) => (
+                <Option value={option.value} key={option.value}>
+                  {' '}
+                  {option.label}{' '}
+                </Option>
+              ))}
+            </Select>
+          )
+        } else
+          inputElement = (
+            <Select
+              key={config.value}
+              placeholder={config.placeholder ?? ''}
+              value={filter[config.value]}
+              onChange={(e: any) => setFilter({ ...filter, [config.value]: e })}
+              style={{ width: config.options?.width ?? defaultWidth }}
+              popupClassName="a-select-popup"
+              className="a-select"
+            >
+              {(config.selections as SelectorOptionConfig[]).map((option: SelectorOptionConfig) => (
+                <Option value={option.value} key={option.value}>
+                  {' '}
+                  {option.label}{' '}
+                </Option>
+              ))}
+            </Select>
+          )
+        break
+      default:
+        break
     }
 
     return (
-      <div className='filter-item' key={index}>
-        <div className='filter-label'> { config.label } </div>
-        <div className='filter-input'>
-          { inputElement }
-        </div>
+      <div className="filter-item" key={index}>
+        <div className="filter-label"> {config.label} </div>
+        <div className="filter-input">{inputElement}</div>
       </div>
     )
   })
 
   return (
-    <div className='a-table-container'>
-      <div className='filter-container'>
-        { filterOptions }
+    <div className="a-table-container">
+      <div className="filter-container">
+        {filterOptions}
         <Button onClick={resetFilter}> 重置 </Button>
-        <Button type='primary' onClick={fetchDataWithFilter}> 查询 </Button>
+        <Button type="primary" onClick={fetchDataWithFilter}>
+          {' '}
+          查询{' '}
+        </Button>
       </div>
-      { props.config.operation && (
-        <div className='operation-container'>
-          <div className='title'>
-            { props.config.operation.title }
-          </div>
-          <div className='btns'>
-            { props.config.operation.buttons && props.config.operation.buttons
-              .filter(
-                v => !v.auth || checkAuth(user!.auth, v.auth),
-              )
-              .map(v => (
-                <Button key={v.label} onClick={() => props.fns[v.eventName]()}> { v.label } </Button>
-              )) }
+      {props.config.operation && (
+        <div className="operation-container">
+          <div className="title">{props.config.operation.title}</div>
+          <div className="btns">
+            {props.config.operation.buttons &&
+              props.config.operation.buttons
+                .filter(v => !v.auth || checkAuth(user!.auth, v.auth))
+                .map(v => (
+                  <Button key={v.label} onClick={() => props.fns[v.eventName]()}>
+                    {' '}
+                    {v.label}{' '}
+                  </Button>
+                ))}
           </div>
         </div>
-      ) }
-      <div className='table-container'>
+      )}
+      <div className="table-container">
         <Table
           scroll={{ x: 1100 }}
           columns={props.config.table.columns}
@@ -198,8 +204,7 @@ const ATable: React.FC<ATableProps> = (props) => {
           pagination={false}
           loading={isLoading}
         />
-        {
-          props.pagination &&
+        {props.pagination && (
           <Pagination
             showSizeChanger
             current={pager.page}
@@ -210,7 +215,7 @@ const ATable: React.FC<ATableProps> = (props) => {
             showTotal={total => `共 ${total} 条记录`}
             pageSizeOptions={[5, 10, 20, 50, 100]}
           />
-        }
+        )}
       </div>
     </div>
   )

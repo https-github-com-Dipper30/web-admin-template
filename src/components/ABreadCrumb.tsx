@@ -1,58 +1,47 @@
 import { HomeOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import './ABreadCrumb.scss'
+import { useAppDispatch } from '@/hooks/redux'
+import { selectMenu } from '@/store/actions/common'
 
 type ABreadCrumbProps = {
-  config: ABreadCrumbConfig[],
+  config: ABreadCrumbConfig[]
 }
 
-const ABreadCrumb: React.FC<ABreadCrumbProps> = (props) => {
-
+const ABreadCrumb: React.FC<ABreadCrumbProps> = props => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
-  const navigateTo = (route: string) => {
-    navigate(route)
+  const directTo = (id: number, path: string) => {
+    dispatch(selectMenu(id))
+    navigate(path)
   }
 
-  return (
-    <div className='a-breadcrumb-container'>
-      <div className='nav-item'>
-        <div className='text clickable' onClick={() => navigateTo('/')}>
+  return props.config ? (
+    <div className="a-breadcrumb-container">
+      <div className="nav-item">
+        <div className="text clickable" onClick={() => directTo(1, '/')}>
           <HomeOutlined />
         </div>
-        {
-          props.config.length > 0 ? (
-            <div className='sperator'>
-              /
-            </div>
-          ) : (<></>)
-        }
+        {props.config.length > 0 ? <div className="sperator">/</div> : <></>}
       </div>
-      { props.config.map((b, index) => {
+      {props.config.map((b, index) => {
         return (
-          <div className='nav-item' key={index}>
-            {
-              b.route ? (
-                <div className='text clickable' onClick={() => navigateTo(b.route as string)}>
-                  { b.text }
-                </div>
-              ) : (
-                <div className='text'>
-                  { b.text }
-                </div>
-              )
-            }
-            {
-              index == props.config.length - 1 ? (<></>) : (
-                <div className='separator'>
-                  /
-                </div>
-              )
-            }
+          <div className="nav-item" key={index}>
+            {b.route ? (
+              <div className="text clickable" onClick={() => navigate(b.route as string)}>
+                {b.text}
+              </div>
+            ) : (
+              <div className="text">{b.text}</div>
+            )}
+            {index == props.config.length - 1 ? <></> : <div className="separator">/</div>}
           </div>
-        )})
-      }
+        )
+      })}
     </div>
+  ) : (
+    <></>
   )
 }
 
