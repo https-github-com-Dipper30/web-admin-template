@@ -29,7 +29,20 @@
   "table": {
     "reset": "Reset",
     "search": "Search",
-    "options": "Options"
+    "options": "Options",
+    "create-user": "Create User",
+    "check-auth": "Check Auth",
+    "record-count": "{{num}} {{record}} in total"
+  },
+  "table-data": {
+    "email": "Email",
+    "username": "Username",
+    "role": "Role",
+    "created-at": "Created At",
+    "creator": "Creator",
+    "user-id": "User ID",
+    "user-role": "User Role",
+    "user-role-pl": "Select Role"
   },
   "confirm": "Confirm",
   "cancel": "Cancel",

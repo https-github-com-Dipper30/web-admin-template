@@ -6,8 +6,9 @@ const LayoutRouter: React.FC<any> = () => {
   return (
     <BeforeEnter options={{ requireLogin: true, requireRole: [1, 2] }}>
       <Layout>
-        {' '}
-        <Outlet />{' '}
+        &nbsp;
+        <Outlet />
+        &nbsp;
       </Layout>
     </BeforeEnter>
   )

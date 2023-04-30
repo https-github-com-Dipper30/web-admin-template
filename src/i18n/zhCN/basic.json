@@ -29,7 +29,20 @@
   "table": {
     "reset": "重置",
     "search": "查询",
-    "options": "选项"
+    "options": "选项",
+    "create-user": "创建用户",
+    "check-auth": "查看权限",
+    "record-count": "共 {{num}} 条记录"
+  },
+  "table-data": {
+    "email": "邮箱",
+    "username": "用户名",
+    "role": "角色",
+    "created-at": "创建时间",
+    "creator": "创建人",
+    "user-id": "用户ID",
+    "user-role": "用户角色",
+    "user-role-pl": "选择角色"
   },
   "confirm": "确认",
   "cancel": "取消",

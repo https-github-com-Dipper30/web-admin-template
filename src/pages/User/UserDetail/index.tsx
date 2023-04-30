@@ -97,8 +97,7 @@ const UserDetail: React.FC<any> = () => {
       )}
       <div className='row'>
         <Button type='primary' onClick={onSubmitModification}>
-          {' '}
-          保存修改{' '}
+          &nbsp; 保存修改&nbsp;
         </Button>
       </div>
     </div>
@@ -122,8 +121,8 @@ const UserDetail: React.FC<any> = () => {
       <ABreadCrumb config={[{ text: '用户信息' }]} />
       {user?.id === myInfo?.id && (
         <Button className='edit-btn' onClick={changeEditingStatus}>
-          {' '}
-          {isEditing ? '取消修改' : '修改信息'}{' '}
+          &nbsp;
+          {isEditing ? '取消修改' : '修改信息'}&nbsp;
         </Button>
       )}
       {isEditing ? editSection : readOnlyInfo}

@@ -16,8 +16,10 @@ import { DeleteOutlined } from '@ant-design/icons'
 import usePageCode from '@/hooks/usePageCode'
 import { AuthCode, MenuPageCode } from '@/config/constants'
 import useSiderMenu from '@/hooks/useSiderMenu'
+import { useTranslation } from 'react-i18next'
 
 const UserList: React.FC<any> = () => {
+  const { t } = useTranslation()
   const [refresh, setRefresh] = useState<boolean>(false)
   const [addModalVisible, setAddModalVisible] = useState<boolean>(false)
   const [checkAuthModalVisible, setCheckAuthModalVisible] = useState<boolean>(false)
@@ -44,33 +46,33 @@ const UserList: React.FC<any> = () => {
       render: (text: number) => <a>{text}</a>,
     },
     {
-      title: '邮箱',
+      title: t('table-data.email'),
       width: 100,
       dataIndex: 'email',
       key: 'email',
     },
     {
-      title: '用户名',
+      title: t('table-data.username'),
       width: 100,
       dataIndex: 'username',
       key: 'username',
     },
     {
-      title: '角色',
+      title: t('table-data.role'),
       dataIndex: 'role',
       key: 'role',
       width: 100,
       render: (role: { id: number; name: string }) => <UserTag role={role} />,
     },
     {
-      title: '创建时间',
+      title: t('table-data.created-at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 100,
       render: (ts: number) => <span> {generateDateByTs(ts, '20YY-MM-DD')} </span>,
     },
     {
-      title: '创建人',
+      title: t('table-data.creator'),
       dataIndex: 'creator',
       key: 'creator',
       width: 100,
@@ -78,8 +80,8 @@ const UserList: React.FC<any> = () => {
         <>
           {creator ? (
             <span className='hoverable' onClick={() => onUserDetail(creator.id)}>
-              {' '}
-              {creator.username}{' '}
+              &nbsp;
+              {creator.username}&nbsp;
             </span>
           ) : (
             <> - </>
@@ -88,15 +90,14 @@ const UserList: React.FC<any> = () => {
       ),
     },
     {
-      title: '选项',
+      title: t('table.options'),
       key: 'options',
       width: 100,
       fixed: 'right',
       render: (row: TUserRowInfo) => (
         <div className='a-table-options'>
           <Button className='a-table-option-col' onClick={() => checkAuth(row)}>
-            {' '}
-            查看权限{' '}
+            &nbsp;{t('table.check-auth')} &nbsp;
           </Button>
           <AAuthElement className='a-table-option-col' auth={[AuthCode.LOGIN_ADMIN]}>
             <Popconfirm
@@ -118,7 +119,7 @@ const UserList: React.FC<any> = () => {
     filterOptions: [
       {
         type: 'inputNumber',
-        label: '用户id',
+        label: t('table-data.user-id'),
         value: 'id',
         options: {
           min: 0,
@@ -127,7 +128,7 @@ const UserList: React.FC<any> = () => {
       },
       {
         type: 'input',
-        label: '用户名',
+        label: t('table-data.username'),
         value: 'username',
         placeholder: 'username',
         options: {
@@ -136,8 +137,8 @@ const UserList: React.FC<any> = () => {
       },
       {
         type: 'selector',
-        label: '用户角色',
-        placeholder: '选择角色',
+        label: t('table-data.user-role'),
+        placeholder: t('table-data.user-role-pl'),
         prop: 'id',
         value: 'rid',
         dynamic: 'getRoles',
@@ -148,10 +149,10 @@ const UserList: React.FC<any> = () => {
       },
     ],
     operation: {
-      title: '用户列表',
+      title: t('page.user-list'),
       buttons: [
         {
-          label: '创建用户',
+          label: t('table.create-user'),
           eventName: 'showAddModal',
           auth: [AuthCode.CREATE_ACCOUNT],
         },

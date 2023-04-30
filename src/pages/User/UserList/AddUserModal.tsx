@@ -99,8 +99,8 @@ const AddUserModal: React.FC<AddUserModalProps> = props => {
           >
             {roleOptions.map(option => (
               <Option value={option.value} key={option.value}>
-                {' '}
-                {option.label}{' '}
+                &nbsp;
+                {option.label}&nbsp;
               </Option>
             ))}
           </Select>

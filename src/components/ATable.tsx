@@ -133,8 +133,8 @@ const ATable: React.FC<ATableProps> = props => {
             >
               {options[config.optionName as string].map((option: SelectorOptionConfig) => (
                 <Option value={option.value} key={option.value}>
-                  {' '}
-                  {option.label}{' '}
+                  &nbsp;
+                  {option.label}&nbsp;
                 </Option>
               ))}
             </Select>
@@ -152,8 +152,8 @@ const ATable: React.FC<ATableProps> = props => {
             >
               {(config.selections as SelectorOptionConfig[]).map((option: SelectorOptionConfig) => (
                 <Option value={option.value} key={option.value}>
-                  {' '}
-                  {option.label}{' '}
+                  &nbsp;
+                  {option.label}&nbsp;
                 </Option>
               ))}
             </Select>
@@ -190,8 +190,8 @@ const ATable: React.FC<ATableProps> = props => {
                 .filter(v => !v.auth || checkAuth(user!.auth, v.auth))
                 .map(v => (
                   <Button key={v.label} onClick={() => props.fns[v.eventName]()}>
-                    {' '}
-                    {v.label}{' '}
+                    &nbsp;
+                    {v.label}&nbsp;
                   </Button>
                 ))}
           </div>
@@ -213,7 +213,7 @@ const ATable: React.FC<ATableProps> = props => {
             // pageSize={pager.size}
             onChange={onPagerChange}
             total={tableTotal}
-            showTotal={total => `共 ${total} 条记录`}
+            showTotal={total => t('table.record-count', { num: total, record: total > 1 ? 'records' : 'record' })}
             pageSizeOptions={[5, 10, 20, 50, 100]}
           />
         )}

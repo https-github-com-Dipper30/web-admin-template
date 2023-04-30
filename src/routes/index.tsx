@@ -48,8 +48,9 @@ const Router: React.FC = () => {
   const LayoutRouter = (
     <BeforeEnter options={{ requireLogin: true, requireRole: [1, 2] }}>
       <Layout>
-        {' '}
-        <Outlet />{' '}
+        &nbsp;
+        <Outlet />
+        &nbsp;
       </Layout>
     </BeforeEnter>
   )
