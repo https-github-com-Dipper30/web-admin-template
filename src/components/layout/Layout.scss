@@ -1,0 +1,102 @@
+$normal-width: 180px;
+$collapsed-width: 60px;
+$normal-height: 40px;
+$collapsed-height: 40px;
+
+.layout-container {
+  width: 100vw;
+  min-width: 600px;
+  height: 100vh;
+  min-height: 600px;
+  background-color: $surface2;
+  position: relative;
+  color: $text1;
+  cursor: default;
+  .header-container {
+    height: $normal-height;
+    // width: calc(100vw - $normal-width);
+    width: 100vw;
+    min-width: calc(540px + $normal-width);
+    position: absolute;
+    // left: $normal-width;
+    background-color: $surface2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.4s ease;
+    z-index: 1;
+    box-shadow: 6px -1px 13px 4px rgb(50 50 50 / 30%);
+
+    .title {
+      color: $text1;
+      font-weight: 500;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+    &.collapsed {
+      left: $collapsed-width;
+      width: calc(100vw - $collapsed-width);
+      height: $collapsed-height;
+    }
+    .user {
+      font-size: 14px;
+      font-weight: 600;
+      text-align: left;
+      width: 100px;
+      transition: 0.1s ease;
+      cursor: pointer;
+      &:hover {
+        color: $text1;
+      }
+    }
+  }
+  .sider-container {
+    width: $normal-width;
+    height: calc(100vh - $normal-height);
+    min-height: 600px;
+    position: absolute;
+    top: $normal-height;
+    background-color: $sider1;
+    color: $white;
+    transition: 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 80px;
+    &.collapsed {
+      width: $collapsed-width;
+    }
+    .sider-footer {
+      padding: 10px 20px;
+      .theme-selector {
+        width: 100%;
+        text-align: right;
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+  .content-container {
+    width: calc(100vw - $normal-width);
+    height: calc(100vh - $normal-height);
+    min-height: 560px;
+    min-width: 540px;
+    position: absolute;
+    top: $normal-height;
+    left: $normal-width;
+    padding: 20px 30px;
+    // overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: $surface2;
+    transition: 0.4s ease;
+    color: $text1;
+    &.collapsed {
+      left: $collapsed-width;
+      top: $collapsed-height;
+      width: calc(100vw - $collapsed-width);
+    }
+  }
+}
