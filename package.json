@@ -1,13 +1,12 @@
 {
-  "name": "aptx4869-studio-crm",
-  "private": false,
+  "name": "aptx4869-studio-admin-template",
+  "version": "1.0.0",
+  "description": "APTX4869 Studio Admin Template",
   "debug": false,
-  "version": "0.0.0",
-  "description": "APTX4869Studio",
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "git + https://github.com/https-github-com-Dipper30/aptx4868-client.git"
+    "url": "git + https://github.com/https-github-com-Dipper30/web-admin-template.git"
   },
   "keywords": [
     "aptx",
@@ -17,9 +16,9 @@
   "author": "Dipper",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/https-github-com-Dipper30/aptx4868-client/issues"
+    "url": "https://github.com/https-github-com-Dipper30/web-admin-template/issues"
   },
-  "homepage": "https://github.com/https-github-com-Dipper30/aptx4868-client#readme",
+  "homepage": "https://github.com/https-github-com-Dipper30/web-admin-template#readme",
   "scripts": {
     "dev": "vite --port 8081 --mode development",
     "sim": "vite --port 8081 --mode simulation",

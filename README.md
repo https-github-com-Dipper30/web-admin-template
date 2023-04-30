@@ -1,10 +1,28 @@
-# aptx4868-client
+# web-admin-template
 
-APTX4868 Detective Club Web Application
+React.js + Typescript + i18n + react-redux + antd
 
-## run project
+# Get Started
 
-1. npm init
-2. npm run dev (dev mode)
-   npm run sim (sim mode)
-   npm run prod (prod mode)
+## Install NPM
+
+```shell
+npm install
+```
+
+## Build Env File
+
+Create file '.env.development'.
+Paste and modify codes below.
+
+```shell
+# config
+APTX_BASE_URL=http://localhost:3030
+APTX_OUTPUT_DIR=dev
+```
+
+## Run Project
+
+```shell
+npm run dev
+```
