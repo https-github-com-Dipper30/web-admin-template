@@ -3,12 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -22,12 +17,12 @@
     "semi": ["error", "never"],
     "quotes": ["warn", "single"],
     "key-spacing": ["warn", { "beforeColon": false, "afterColon": true }],
-    "new-cap": ["warn", { "newIsCap": true, "capIsNew": false}],
-    "no-multiple-empty-lines": ["warn", {"max": 1}],
+    "new-cap": ["warn", { "newIsCap": true, "capIsNew": false }],
+    "no-multiple-empty-lines": ["warn", { "max": 1 }],
     "comma-style": ["warn", "last"],
     "comma-spacing": ["warn", { "before": false, "after": true }],
     "comma-dangle": ["warn", "always-multiline"],
-    "no-implicit-coercion": "warn",
+    "no-implicit-coercion": "off",
     "no-invalid-this": "warn",
     "no-multi-spaces": "warn",
     "no-new-func": "warn",
