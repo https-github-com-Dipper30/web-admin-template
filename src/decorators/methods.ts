@@ -22,9 +22,6 @@ export function logApiResult(
     const params = args.map(a => JSON.stringify(a)).join()
     // 调用 method 并获取其返回值
     const result = await method.apply(this, args)
-    // 转换结尾为字符串
-    // const r = JSON.stringify(result)
-    // 在终端显示函数调用细节
     // eslint-disable-next-line no-console
     console.log(`call ${propertyName} (${params}) `, result)
     // 返回调用函数的结果

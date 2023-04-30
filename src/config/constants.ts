@@ -7,6 +7,29 @@ export enum PROCESS_ENV {
   PRODUCTION = 'production',
 }
 
+export enum LANGUAGE {
+  EN = 'en',
+  ZH_CN = 'zhCN',
+  ZH_TW = 'zhTW',
+}
+
+export const enum MenuPageCode {
+  HOME,
+  USER,
+  USER_LIST,
+  USER_DETAIL,
+  ACCESS,
+  AUTH_LIST,
+  ROLE_LIST,
+}
+
+export enum STORAGE_KEY {
+  LANG = 'language',
+  TOKEN = 'token',
+  THEME = 'theme',
+  UID = 'uid',
+}
+
 export enum AuthCode {
   LOGIN_ADMIN = 1,
   CREATE_ACCOUNT = 5,

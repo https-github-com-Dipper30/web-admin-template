@@ -49,39 +49,39 @@ const EditModal: React.FC<AddModalProps> = props => {
 
   return (
     <Modal
-      title="新建角色"
+      title='新建角色'
       open={props.visible}
       onCancel={props.closeModal}
       footer={[
-        <Button loading={loading} key="submit" type="primary" onClick={onSubmit}>
+        <Button loading={loading} key='submit' type='primary' onClick={onSubmit}>
           添加
         </Button>,
       ]}
     >
-      <div className="row">
-        <div className="label"> 角色id </div>
-        <div className="input">
+      <div className='row'>
+        <div className='label'> 角色id </div>
+        <div className='input'>
           <InputNumber value={id} min={0} onChange={(e: any) => setId(e)} />
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 角色名 </div>
-        <div className="input">
-          <Input placeholder="role_name" value={name} onInput={(e: any) => setName(e.target.value)} />
+      <div className='row'>
+        <div className='label'> 角色名 </div>
+        <div className='input'>
+          <Input placeholder='role_name' value={name} onInput={(e: any) => setName(e.target.value)} />
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 角色描述 </div>
-        <div className="input">
-          <Input placeholder="description" value={description} onInput={(e: any) => setDescription(e.target.value)} />
+      <div className='row'>
+        <div className='label'> 角色描述 </div>
+        <div className='input'>
+          <Input placeholder='description' value={description} onInput={(e: any) => setDescription(e.target.value)} />
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 角色默认权限 </div>
-        <div className="input">
+      <div className='row'>
+        <div className='label'> 角色默认权限 </div>
+        <div className='input'>
           <Checkbox.Group style={{ width: '100%' }} onChange={onCheckAuth}>
             {allAuth.map(a => (
               <Row key={a.id}>

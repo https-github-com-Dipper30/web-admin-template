@@ -11,8 +11,8 @@ import { handleResult } from '@/utils'
 import AddModal from './AddModal'
 import EditModal from './EditModal'
 import usePageCode from '@/hooks/usePageCode'
-import { MenuPageCode } from '@/config/sider-menu'
-import { AuthCode } from '@/config/constants'
+import { AuthCode, MenuPageCode } from '@/config/constants'
+import useSiderMenu from '@/hooks/useSiderMenu'
 
 const RoleList: React.FC<any> = () => {
   const [refresh, setRefresh] = useState<boolean>(false)
@@ -20,13 +20,14 @@ const RoleList: React.FC<any> = () => {
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<TRoleRowInfo>()
 
-  const breadcrumb = usePageCode(MenuPageCode.ROLE_LIST)
+  const [menu] = useSiderMenu()
+  const breadcrumb = usePageCode(MenuPageCode.ROLE_LIST, menu)
 
   const columnsConfig: ColumnsType<any> = [
     {
       title: '',
       key: 'index',
-      width: 30,
+      width: 50,
       fixed: 'left',
       ellipsis: true,
       render: (item: any, record: any, index: number) => <>{index + 1}</>,
@@ -35,7 +36,7 @@ const RoleList: React.FC<any> = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      width: 45,
+      width: 50,
       render: (id: string) => <span>{id}</span>,
     },
     {
@@ -73,18 +74,18 @@ const RoleList: React.FC<any> = () => {
       width: 150,
       fixed: 'right',
       render: (row: any) => (
-        <div className="a-table-options">
-          <AAuthElement className="a-table-option-col" auth={[AuthCode.MODIFY_AUTH]}>
+        <div className='a-table-options'>
+          <AAuthElement className='a-table-option-col' auth={[AuthCode.MODIFY_AUTH]}>
             <Button onClick={() => onEditingAuth(row)}> 编辑角色 </Button>
           </AAuthElement>
-          <AAuthElement className="a-table-option-col" auth={[AuthCode.MODIFY_AUTH]}>
+          <AAuthElement className='a-table-option-col' auth={[AuthCode.MODIFY_AUTH]}>
             <Popconfirm
-              title="确认删除该角色吗?"
+              title='确认删除该角色吗?'
               onConfirm={() => deleteRole(row.id)}
-              okText="确认"
-              cancelText="点错了~"
+              okText='确认'
+              cancelText='点错了~'
             >
-              <Button danger type="primary" shape="circle" icon={<DeleteOutlined />} />
+              <Button danger type='primary' shape='circle' icon={<DeleteOutlined />} />
             </Popconfirm>
           </AAuthElement>
         </div>
@@ -146,7 +147,7 @@ const RoleList: React.FC<any> = () => {
   const showAddModal = () => setAddModalVisible(true)
 
   return (
-    <div className="role-list-page">
+    <div className='role-list-page'>
       <ABreadCrumb config={breadcrumb} />
 
       <AddModal visible={addModalVisible} setRefresh={setRefresh} closeModal={() => setAddModalVisible(false)} />

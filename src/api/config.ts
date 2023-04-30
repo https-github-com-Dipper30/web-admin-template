@@ -1,7 +1,8 @@
 import { logApiResult } from '@/decorators/methods'
 import { handleResult } from '@/utils'
-import { mixMessage } from '@/utils/tools'
+import { getLocalStorage, mixMessage } from '@/utils/tools'
 import { $get, $post, $put, $delete } from './http'
+import { STORAGE_KEY } from '@/config/constants'
 
 class ConfigAPI {
   @logApiResult
@@ -10,7 +11,7 @@ class ConfigAPI {
   }
 
   async loginByToken(): APIPromise<{ user: any; token: string }> {
-    const token = localStorage.getItem('token')
+    const token = getLocalStorage(STORAGE_KEY.TOKEN)
     return $post('/autoLogin', { token })
   }
 

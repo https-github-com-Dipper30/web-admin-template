@@ -5,6 +5,7 @@ type TThemeProperty = {
   surface1: string
   surface2: string
   surface3: string
+  surface_hover: string
   surface_hover_dark: string
   surface_hover_light: string
 
@@ -70,6 +71,7 @@ type TCommon = {
   selectedMenu: number
   menuCollapsed: boolean
   theme: Theme
+  language: LANGUAGE
 }
 
 type TStoreAction<T, D> = {

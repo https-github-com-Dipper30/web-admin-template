@@ -14,8 +14,8 @@ import { useNavigate } from 'react-router-dom'
 import AAuthElement from '@/components/snippets/AAuthElement'
 import { DeleteOutlined } from '@ant-design/icons'
 import usePageCode from '@/hooks/usePageCode'
-import { MenuPageCode, findMenu } from '@/config/sider-menu'
-import { AuthCode } from '@/config/constants'
+import { AuthCode, MenuPageCode } from '@/config/constants'
+import useSiderMenu from '@/hooks/useSiderMenu'
 
 const UserList: React.FC<any> = () => {
   const [refresh, setRefresh] = useState<boolean>(false)
@@ -24,14 +24,15 @@ const UserList: React.FC<any> = () => {
   const [currentRow, setCurrentRow] = useState<TUserRowInfo>()
   const navigate = useNavigate()
 
-  const breadcrumb = usePageCode(MenuPageCode.USER_LIST)
+  const [menu] = useSiderMenu()
+  const breadcrumb = usePageCode(MenuPageCode.USER_LIST, menu)
 
   const columnsConfig: ColumnsType<any> = [
     {
       title: '',
       dataIndex: 'id',
       key: 'index',
-      width: 30,
+      width: 50,
       fixed: 'left',
       render: (item: any, record: any, index: number) => <>{index + 1}</>,
     },
@@ -76,7 +77,7 @@ const UserList: React.FC<any> = () => {
       render: (creator: { id: number; username: string } | null) => (
         <>
           {creator ? (
-            <span className="hoverable" onClick={() => onUserDetail(creator.id)}>
+            <span className='hoverable' onClick={() => onUserDetail(creator.id)}>
               {' '}
               {creator.username}{' '}
             </span>
@@ -92,19 +93,19 @@ const UserList: React.FC<any> = () => {
       width: 100,
       fixed: 'right',
       render: (row: TUserRowInfo) => (
-        <div className="a-table-options">
-          <Button className="a-table-option-col" onClick={() => checkAuth(row)}>
+        <div className='a-table-options'>
+          <Button className='a-table-option-col' onClick={() => checkAuth(row)}>
             {' '}
             查看权限{' '}
           </Button>
-          <AAuthElement className="a-table-option-col" auth={[AuthCode.LOGIN_ADMIN]}>
+          <AAuthElement className='a-table-option-col' auth={[AuthCode.LOGIN_ADMIN]}>
             <Popconfirm
-              title="确认删除该用户吗?"
+              title='确认删除该用户吗?'
               onConfirm={() => deleteUser(row.id)}
-              okText="确认"
-              cancelText="点错了~"
+              okText='确认'
+              cancelText='点错了~'
             >
-              <Button danger type="primary" shape="circle" icon={<DeleteOutlined />} />
+              <Button danger type='primary' shape='circle' icon={<DeleteOutlined />} />
             </Popconfirm>
           </AAuthElement>
         </div>
@@ -199,7 +200,7 @@ const UserList: React.FC<any> = () => {
   }
 
   return (
-    <div className="user-list-page">
+    <div className='user-list-page'>
       <ABreadCrumb config={breadcrumb} />
 
       <AddUserModal visible={addModalVisible} closeModal={() => setAddModalVisible(false)} setRefresh={setRefresh} />

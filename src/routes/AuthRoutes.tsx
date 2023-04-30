@@ -7,10 +7,10 @@ const RoleList = lazy(() => import('@/pages/Auth/RoleList'))
 
 const AuthRoutes = () => {
   return (
-    <Route key={2} path="access">
+    <Route key={2} path='access'>
       <Route index element={lazyComponent(AuthList)} />
-      <Route path="auth" element={lazyComponent(AuthList)} />
-      <Route path="role" element={lazyComponent(RoleList)} />
+      <Route path='auth' element={lazyComponent(AuthList)} />
+      <Route path='role' element={lazyComponent(RoleList)} />
     </Route>
   )
 }

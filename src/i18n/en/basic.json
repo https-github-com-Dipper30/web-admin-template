@@ -1,0 +1,40 @@
+{
+  "title": "APTX4869 Studio Admin Template",
+  "username": "Username",
+  "password": "Password",
+  "day": "day",
+  "night": "night",
+  "lang": {
+    "en": "English",
+    "zhCN": "Simplified Chinese",
+    "zhTW": "Traditional Chinese",
+    "en-abbre": "en",
+    "zhCN-abbre": "简",
+    "zhTW-abbre": "繁"
+  },
+  "page": {
+    "home": "Home",
+    "home-abbre": "Home",
+    "user": "User",
+    "user-abbre": "User",
+    "access": "Access",
+    "access-abbre": "Access",
+    "user-list": "UserList",
+    "user-list-abbre": "Users",
+    "auth": "Authorities",
+    "auth-abbre": "Authorities",
+    "role": "Roles",
+    "role-abbre": "Roles"
+  },
+  "table": {
+    "reset": "Reset",
+    "search": "Search",
+    "options": "Options"
+  },
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "confirm-modification": "Confirm",
+  "cancel-modification": "Cancel",
+  "add": "Add",
+  "delete": "Delete"
+}

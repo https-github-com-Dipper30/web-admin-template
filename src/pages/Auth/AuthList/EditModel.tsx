@@ -42,18 +42,18 @@ const EditModal: React.FC<EditModalProps> = props => {
 
   return (
     <Modal
-      title="编辑权限"
+      title='编辑权限'
       open={props.visible}
       onCancel={props.closeModal}
       footer={[
-        <Button loading={loading} key="submit" type="primary" onClick={onSubmit}>
+        <Button loading={loading} key='submit' type='primary' onClick={onSubmit}>
           确认修改
         </Button>,
       ]}
     >
-      <div className="row">
-        <div className="label"> 权限id </div>
-        <div className="input">
+      <div className='row'>
+        <div className='label'> 权限id </div>
+        <div className='input'>
           <InputNumber
             disabled={true}
             value={props.authInfo?.id}
@@ -64,17 +64,17 @@ const EditModal: React.FC<EditModalProps> = props => {
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 权限名 </div>
-        <div className="input">
-          <Input placeholder="auth_name" value={name} onInput={(e: any) => setName(e.target.value)} />
+      <div className='row'>
+        <div className='label'> 权限名 </div>
+        <div className='input'>
+          <Input placeholder='auth_name' value={name} onInput={(e: any) => setName(e.target.value)} />
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 权限描述 </div>
-        <div className="input">
-          <Input placeholder="description" value={description} onInput={(e: any) => setDescription(e.target.value)} />
+      <div className='row'>
+        <div className='label'> 权限描述 </div>
+        <div className='input'>
+          <Input placeholder='description' value={description} onInput={(e: any) => setDescription(e.target.value)} />
         </div>
       </div>
     </Modal>

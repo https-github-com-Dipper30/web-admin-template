@@ -101,14 +101,14 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
 
   const readOnlySection = (
     <>
-      <div className="row">
-        <div className="label"> 用户id </div>
-        <div className="input">{props.userInfo?.id}</div>
+      <div className='row'>
+        <div className='label'> 用户id </div>
+        <div className='input'>{props.userInfo?.id}</div>
       </div>
 
-      <div className="row">
-        <div className="label"> 用户名 </div>
-        <div className="input">{props.userInfo?.username}</div>
+      <div className='row'>
+        <div className='label'> 用户名 </div>
+        <div className='input'>{props.userInfo?.username}</div>
       </div>
 
       <Table columns={columns} dataSource={currentAuth} pagination={false} />
@@ -116,7 +116,7 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
   )
 
   const editSection = (
-    <div className="auth-selector-list">
+    <div className='auth-selector-list'>
       <Checkbox.Group defaultValue={newAuth} style={{ width: '100%' }} onChange={onCheckAuth}>
         {allAuth.map(a => (
           <Row key={a.id}>
@@ -132,7 +132,7 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
   const footer = [
     <div key={1}>
       {isEditing ? (
-        <Button type="primary" onClick={onSubmit}>
+        <Button type='primary' onClick={onSubmit}>
           确认修改
         </Button>
       ) : (
@@ -142,9 +142,9 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
   ]
 
   return (
-    <Modal title="用户权限" open={props.visible} onCancel={props.closeModal} footer={footer}>
+    <Modal title='用户权限' open={props.visible} onCancel={props.closeModal} footer={footer}>
       <AAuthElement auth={[AuthCode.MODIFY_ACCOUNT]}>
-        <Button className="edit-btn" loading={loading} onClick={changeEditingStatus}>
+        <Button className='edit-btn' loading={loading} onClick={changeEditingStatus}>
           {isEditing ? '取消修改' : '修改权限'}
         </Button>
       </AAuthElement>

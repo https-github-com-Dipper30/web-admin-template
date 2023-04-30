@@ -25,8 +25,11 @@
   .ant-btn {
     color: $white;
     background-color: $prime1;
+    border-color: $prime1;
     &:hover {
+      color: $text1;
       background-color: $prime_hover;
+      border-color: $prime_hover;
     }
   }
   .item {

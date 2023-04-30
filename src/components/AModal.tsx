@@ -8,7 +8,7 @@ type AModalProps = {
 
 const AModal: React.FC<AModalProps> = props => {
   return (
-    <Modal title={props.title} visible={props.visible}>
+    <Modal title={props.title} open={props.visible}>
       {props.children}
     </Modal>
   )

@@ -12,8 +12,8 @@ import AAuthElement from '@/components/snippets/AAuthElement'
 import EditModal from './EditModel'
 import AddModal from './AddModal'
 import usePageCode from '@/hooks/usePageCode'
-import { MenuPageCode } from '@/config/sider-menu'
-import { AuthCode } from '@/config/constants'
+import { AuthCode, MenuPageCode } from '@/config/constants'
+import useSiderMenu from '@/hooks/useSiderMenu'
 
 const AuthList: React.FC<any> = () => {
   const [refresh, setRefresh] = useState<boolean>(false)
@@ -21,13 +21,14 @@ const AuthList: React.FC<any> = () => {
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false)
   const [currentRow, setCurrentRow] = useState<TAuthRowInfo>()
 
-  const breadcrumb = usePageCode(MenuPageCode.AUTH_LIST)
+  const [menu] = useSiderMenu()
+  const breadcrumb = usePageCode(MenuPageCode.AUTH_LIST, menu)
 
   const columnsConfig: ColumnsType<any> = [
     {
       title: '',
       key: 'index',
-      width: 30,
+      width: 50,
       fixed: 'left',
       ellipsis: true,
       render: (item: any, record: any, index: number) => <>{index + 1}</>,
@@ -36,7 +37,7 @@ const AuthList: React.FC<any> = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
-      width: 45,
+      width: 50,
       render: (id: string) => <span>{id}</span>,
     },
     {
@@ -59,18 +60,18 @@ const AuthList: React.FC<any> = () => {
       width: 150,
       fixed: 'right',
       render: (row: any) => (
-        <div className="a-table-options">
-          <AAuthElement className="a-table-option-col" auth={[AuthCode.MODIFY_AUTH]}>
+        <div className='a-table-options'>
+          <AAuthElement className='a-table-option-col' auth={[AuthCode.MODIFY_AUTH]}>
             <Button onClick={() => onEditingAuth(row)}> 编辑权限 </Button>
           </AAuthElement>
-          <AAuthElement className="a-table-option-col" auth={[AuthCode.MODIFY_AUTH]}>
+          <AAuthElement className='a-table-option-col' auth={[AuthCode.MODIFY_AUTH]}>
             <Popconfirm
-              title="确认删除该权限吗?"
+              title='确认删除该权限吗?'
               onConfirm={() => deleteAuth(row.id)}
-              okText="确认"
-              cancelText="点错了~"
+              okText='确认'
+              cancelText='点错了~'
             >
-              <Button danger type="primary" shape="circle" icon={<DeleteOutlined />} />
+              <Button danger type='primary' shape='circle' icon={<DeleteOutlined />} />
             </Popconfirm>
           </AAuthElement>
         </div>
@@ -133,7 +134,7 @@ const AuthList: React.FC<any> = () => {
   const showAddModal = () => setAddModalVisible(true)
 
   return (
-    <div className="auth-list-page">
+    <div className='auth-list-page'>
       <ABreadCrumb config={breadcrumb} />
 
       <AddModal visible={addModalVisible} closeModal={() => setAddModalVisible(false)} setRefresh={setRefresh} />

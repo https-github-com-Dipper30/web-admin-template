@@ -28,6 +28,7 @@ $placeholder: #6c6c6c;
 $surface1: var(--surface1, '#141414');
 $surface2: var(--surface2, '#141414');
 $surface3: var(--surface3, '#141414');
+$surface_hover: var(--surface_hover, '#141414');
 $surface_hover_dark: var(--surface_hover_dark, '#141414');
 $surface_hover_light: var(--surface_hover_light, '#ffffff');
 
@@ -110,7 +111,6 @@ code {
     margin-bottom: 10px;
   }
 }
-
 .ant-table {
   // table scrollbar
   background-color: $surface2;
@@ -162,17 +162,18 @@ code {
     background-color: $surface1;
     color: $text1;
     &:hover {
-      background-color: $surface3;
+      background-color: $surface_hover;
       color: $text1;
     }
   }
 
-  .ant-table-thead > tr > th {
+  .ant-table-thead > tr > th,
+  .ant-table-thead > tr > td {
     background-color: $surface1;
     color: $text1;
     border-color: $surface2;
     &:hover {
-      background-color: $surface3;
+      background-color: $surface_hover;
       color: $text1;
     }
   }
@@ -180,11 +181,15 @@ code {
   .ant-table-tbody > tr > td {
     border-bottom: 1px solid $surface2;
   }
-  .ant-table-row:hover {
-    background-color: $surface2;
-    color: $text1;
+
+  .ant-table-tbody > tr.ant-table-row:hover > td {
+    background-color: $surface_hover;
   }
   .ant-table-row {
+    &:hover {
+      background-color: $surface_hover;
+      color: $text1;
+    }
     .ant-table-cell {
       &.ant-table-cell-row-hover {
         background-color: $surface3;
@@ -195,43 +200,67 @@ code {
 }
 
 .ant-switch {
-  background-color: #2c2c2c;
   color: $white;
-  .ant-switch-inner {
+  // &-checked {
+  //   background: #e1e1e1;
+  //   background-color: #e1e1e1;
+  // }
+  &-inner {
     color: #1e1e1e;
   }
   &.light {
     .ant-switch-handle::before {
+      background: #fff;
       background-color: #fff;
     }
+    background: #3c3c3c;
+    &:hover {
+      background: #2c2c2c;
+    }
+    &.ant-switch-checked {
+      background: #000;
+      &:hover {
+        background: #1e1e1e;
+      }
+    }
     .ant-switch-inner {
-      color: #fff;
+      .ant-switch-inner-checked {
+        color: #fff;
+      }
     }
   }
   &.dark {
     .ant-switch-handle::before {
+      background: #111;
       background-color: #111;
     }
+    &.ant-switch-checked {
+      background: #fff;
+      &:hover {
+        background: #e1e1e1;
+      }
+    }
+    .ant-switch-inner {
+      .ant-switch-inner-checked {
+        color: #111;
+      }
+    }
   }
-}
-
-.ant-switch-checked {
-  background-color: #e1e1e1;
 }
 
 .ant-breadcrumb {
   color: $text1;
   margin-bottom: 10px;
+  a {
+    color: $text1;
+    &:hover {
+      color: $prime1;
+    }
+  }
 }
 .ant-breadcrumb-separator,
 .ant-breadcrumb-link {
   color: $text1;
-}
-.ant-breadcrumb a {
-  color: $text1;
-  &:hover {
-    color: $prime1;
-  }
 }
 
 .ant-modal-wrap {
@@ -242,6 +271,13 @@ code {
 }
 
 .a-select {
+  &:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover
+    .ant-select-selector {
+    border-color: $text3;
+    &:hover {
+      border-color: $text2;
+    }
+  }
   // selector hover
   .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
     border-color: $text2;
@@ -258,6 +294,12 @@ code {
   .ant-select-arrow {
     color: $text2;
   }
+}
+
+.ant-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .ant-checkbox-wrapper,
@@ -294,17 +336,47 @@ code {
   &:focus {
     border: 1px solid $text2;
   }
-  .ant-input-number-handler-wrap {
-    background-color: $surface1;
-    background: $surface1;
-    color: $text2;
-    .ant-input-number-handler-up-inner,
-    .ant-input-number-handler-down-inner {
+  .ant-input-number-handler {
+    height: 50%;
+    &-wrap {
+      background-color: $surface1;
+      background: $surface1;
       color: $text2;
-      &:hover {
-        color: $second1;
+      .ant-input-number-handler-up-inner,
+      .ant-input-number-handler-down-inner {
+        color: $text2;
+        &:hover {
+          color: $prime1;
+          svg {
+            color: $prime1;
+          }
+        }
+      }
+      .ant-input-number-handler {
+        height: 50%;
+        span {
+          &:hover {
+            color: $prime1;
+          }
+        }
+        &:hover {
+          height: 50%;
+          color: $prime1;
+          svg {
+            color: $prime1;
+          }
+        }
       }
     }
+    &:hover {
+      height: 50%;
+      .ant-input-number-handler-up-inner {
+        color: $prime1;
+      }
+    }
+  }
+  .ant-input-number-input {
+    color: $text1;
   }
 }
 
@@ -349,9 +421,12 @@ code {
     pointer-events: auto;
     max-width: 2000px;
     display: inline-block;
+    padding: 14px 20px;
   }
   .ant-modal-header {
     background-color: $surface1;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
     .ant-modal-title {
       color: $text1;
     }
@@ -359,6 +434,8 @@ code {
     color: $text1;
   }
   .ant-modal-footer {
+    margin-top: 14px;
+    padding-top: 14px;
     border-top: 1px solid $surface3;
   }
   .ant-modal-close {

@@ -58,41 +58,41 @@ const AddUserModal: React.FC<AddUserModalProps> = props => {
 
   return (
     <Modal
-      title="新建账号"
+      title='新建账号'
       open={props.visible}
       onCancel={props.closeModal}
       footer={[
-        <Button loading={loading} key="submit" type="primary" onClick={onSubmit}>
+        <Button loading={loading} key='submit' type='primary' onClick={onSubmit}>
           添加
         </Button>,
       ]}
     >
-      <div className="row">
-        <div className="label"> 用户名 </div>
-        <div className="input">
-          <Input placeholder="4 ~ 18 位字符" value={username} onInput={(e: any) => setUsername(e.target.value)} />
+      <div className='row'>
+        <div className='label'> 用户名 </div>
+        <div className='input'>
+          <Input placeholder='4 ~ 18 位字符' value={username} onInput={(e: any) => setUsername(e.target.value)} />
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 密码 </div>
-        <div className="input">
+      <div className='row'>
+        <div className='label'> 密码 </div>
+        <div className='input'>
           <Input
-            type="password"
-            placeholder="6 ~ 18 位密码"
+            type='password'
+            placeholder='6 ~ 18 位密码'
             value={password}
             onInput={(e: any) => setPassword(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="row">
-        <div className="label"> 用户身份 </div>
-        <div className="input">
+      <div className='row'>
+        <div className='label'> 用户身份 </div>
+        <div className='input'>
           <Select
-            className="a-select"
+            className='a-select'
             style={{ width: '250px' }}
-            placeholder="选择身份"
+            placeholder='选择身份'
             onDropdownVisibleChange={(open: boolean) => open && fetchRoles()}
             value={rid}
             onChange={(e: any) => setRid(e)}

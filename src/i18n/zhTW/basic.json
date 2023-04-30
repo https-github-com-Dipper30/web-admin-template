@@ -1,0 +1,40 @@
+{
+  "title": "APTX4869工作室后台管理模板",
+  "username": "用户名",
+  "password": "密码",
+  "day": "白天",
+  "night": "黑夜",
+  "lang": {
+    "en": "英语",
+    "zhCN": "简体中文",
+    "zhTW": "繁体中文",
+    "en-abbre": "en",
+    "zhCN-abbre": "简",
+    "zhTW-abbre": "繁"
+  },
+  "page": {
+    "home": "主页",
+    "home-abbre": "主页",
+    "user": "用户",
+    "user-abbre": "用户",
+    "access": "权限",
+    "access-abbre": "权限",
+    "user-list": "用户列表",
+    "user-list-abbre": "用户列表",
+    "auth": "权限列表",
+    "auth-abbre": "权限列表",
+    "role": "角色列表",
+    "role-abbre": "角色列表"
+  },
+  "table": {
+    "reset": "重置",
+    "search": "查询",
+    "options": "选项"
+  },
+  "confirm": "确认",
+  "cancel": "取消",
+  "confirm-modification": "确认修改",
+  "cancel-modification": "取消修改",
+  "add": "添加",
+  "delete": "删除"
+}

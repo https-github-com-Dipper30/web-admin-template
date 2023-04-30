@@ -18,24 +18,24 @@ const ABreadCrumb: React.FC<ABreadCrumbProps> = props => {
   }
 
   return props.config ? (
-    <div className="a-breadcrumb-container">
-      <div className="nav-item">
-        <div className="text clickable" onClick={() => directTo(1, '/')}>
+    <div className='a-breadcrumb-container'>
+      <div className='nav-item'>
+        <div className='text clickable' onClick={() => directTo(1, '/')}>
           <HomeOutlined />
         </div>
-        {props.config.length > 0 ? <div className="sperator">/</div> : <></>}
+        {props.config.length > 0 ? <div className='separator'>/</div> : <></>}
       </div>
       {props.config.map((b, index) => {
         return (
-          <div className="nav-item" key={index}>
+          <div className='nav-item' key={index}>
             {b.route ? (
-              <div className="text clickable" onClick={() => navigate(b.route as string)}>
+              <div className='text clickable' onClick={() => navigate(b.route as string)}>
                 {b.text}
               </div>
             ) : (
-              <div className="text">{b.text}</div>
+              <div className='text'>{b.text}</div>
             )}
-            {index == props.config.length - 1 ? <></> : <div className="separator">/</div>}
+            {index == props.config.length - 1 ? <></> : <div className='separator'>/</div>}
           </div>
         )
       })}

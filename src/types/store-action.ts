@@ -8,6 +8,7 @@ export enum CommonAction {
   SELECT_MENU = 'selectMenu',
   TOGGLE_MENU = 'toggleMenu',
   CHANGE_THEME = 'changeTheme',
+  CHANGE_LANGUAGE = 'changeLanguage',
 }
 
 export enum ProcessEnv {

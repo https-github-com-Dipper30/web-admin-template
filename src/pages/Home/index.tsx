@@ -224,20 +224,20 @@ const Home: React.FC<any> = () => {
   }
 
   return (
-    <div className="home-page">
-      {isLoading && <ALoader size="large" />}
+    <div className='home-page'>
+      {isLoading && <ALoader size='large' />}
 
       <div>
-        <APanel title="当前在线用户">
-          <div className="user-list">
-            <span className="count">{currentActiveUsers.length} 人</span>
+        <APanel title='当前在线用户'>
+          <div className='user-list'>
+            <span className='count'>{currentActiveUsers.length} 人</span>
           </div>
         </APanel>
-        <APanel title="过去一周日活">
-          <div id="daily-active-user" className="graph" />
+        <APanel title='过去一周日活'>
+          <div id='daily-active-user' className='graph' />
         </APanel>
-        <APanel title="过去半年月活">
-          <div id="monthly-active-user" className="graph" />
+        <APanel title='过去半年月活'>
+          <div id='monthly-active-user' className='graph' />
         </APanel>
       </div>
     </div>

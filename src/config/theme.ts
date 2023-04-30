@@ -3,7 +3,8 @@ export const themeColors: TThemeType = {
     surface1: '#f5f5f5',
     surface2: '#e1e1e1',
     surface3: '#eaeaea',
-    surface_hover_dark: '#202020',
+    surface_hover: '#ececec',
+    surface_hover_dark: '#212121',
     surface_hover_light: '#7e7e7e',
 
     text1: '#111',
@@ -40,7 +41,8 @@ export const themeColors: TThemeType = {
     surface1: '#141414',
     surface2: '#1f1f1f',
     surface3: '#252525',
-    surface_hover_dark: '#1a1a1a',
+    surface_hover: '#181818',
+    surface_hover_dark: '#181818',
     surface_hover_light: '#3c3c3c',
 
     text1: '#e5e5e5',

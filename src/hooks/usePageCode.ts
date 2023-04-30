@@ -1,20 +1,21 @@
 import { selectMenu } from '@/store/actions/common'
 import { useAppDispatch, useAppSelector } from './redux'
-import { MenuPageCode, findMenu } from '@/config/sider-menu'
 import { useEffect, useMemo } from 'react'
+import { MenuPageCode } from '@/config/constants'
+import { findMenu } from '@/utils/tools'
 
 /**
  * 对面包屑导航和边栏选中样式做处理
  * @param {MenuPageCode} code
  */
-const usePageCode = (code: MenuPageCode) => {
+const usePageCode = (code: MenuPageCode, menuList: TSiderMenuItem[]) => {
   const dispatch = useAppDispatch()
-  const menu = useMemo(() => findMenu(code), [code])
+  const menu = useMemo(() => findMenu(code, menuList), [code, menuList])
 
   useEffect(() => {
     if (!menu) return
     dispatch(selectMenu(menu.id))
-  }, [menu])
+  }, [menu, menuList])
 
   return menu?.breadcrumb || []
 }

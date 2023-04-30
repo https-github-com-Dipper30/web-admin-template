@@ -4,7 +4,8 @@ import './SiderMenuItem.scss'
 import { RightOutlined, DownOutlined } from '@ant-design/icons'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { selectMenu } from '@/store/actions/common'
-import { findMenu } from '@/config/sider-menu'
+import { findMenu } from '@/utils/tools'
+import { MenuPageCode } from '@/config/constants'
 
 type SiderMenuItemProps = {
   menuItem: TSiderMenuItem
@@ -28,15 +29,18 @@ const SiderMenuItem: React.FC<SiderMenuItemProps> = props => {
     }
   }
 
-  const directTo = (id: number, path: string) => {
+  const directTo = (id: MenuPageCode, path: string) => {
     dispatch(selectMenu(id))
     navigate(path)
   }
 
   useEffect(() => {
-    const isChildSelected = findMenu(selected, props.menuItem.children)
-    if (isChildSelected) setCollapsed(false)
-  }, [selected])
+    if (selected === props.menuItem.id) {
+      setCollapsed(false)
+    } else if (findMenu(selected, props.menuItem.children)) {
+      setCollapsed(false)
+    } else setCollapsed(true)
+  }, [selected, props.menuItem])
 
   useEffect(() => {
     setTimeout(() => {
@@ -45,26 +49,26 @@ const SiderMenuItem: React.FC<SiderMenuItemProps> = props => {
   }, [collapsed, props.menuItem])
 
   const listIcon = props.menuItem.children && !layoutCollapsed && (
-    <div className="list-icon">{collapsed ? <RightOutlined /> : <DownOutlined />}</div>
+    <div className='list-icon'>{collapsed ? <RightOutlined /> : <DownOutlined />}</div>
   )
 
   return (
-    <div className="sider-menu-item-container" ref={subMenuRef}>
+    <div className='sider-menu-item-container' ref={subMenuRef}>
       <div
         className={`item-container${props.menuItem.children ? '' : ' hoverable'}${
           selected === props.menuItem.id ? ' selected' : ''
         }`}
         onClick={onMenuItem}
       >
-        <div className="icon">
+        <div className='icon'>
           <Icon />
         </div>
-        <div className="item-name">{!layoutCollapsed && props.menuItem.name}</div>
+        <div className='item-name'>{!layoutCollapsed && props.menuItem.name}</div>
         {listIcon}
       </div>
 
       {props.menuItem.children && (
-        <div className="sub-menu-container">
+        <div className='sub-menu-container'>
           {props.menuItem.children?.map((c, index) => (
             <div
               key={index}

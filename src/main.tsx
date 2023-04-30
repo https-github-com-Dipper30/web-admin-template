@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import './index.scss'
 import store from '@/store'
-import AppRouter from '@/routes'
+import App from './App'
 
 const text = `
                aaaa                 ppppppppppppp        tttttttttttttttttttt      xxxxx        xxxxxx
@@ -24,6 +24,6 @@ console.log(text)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <AppRouter />
+    <App />
   </Provider>,
 )

@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = props => {
   // const collapsed = useSelector((state: any) => state.config.collapsed)
 
   return (
-    <div className="layout-container">
+    <div className='layout-container'>
       <Header collapsed={collapsed} />
       <Sider collapsed={collapsed} />
       <Content collapsed={collapsed}>{props.children}</Content>

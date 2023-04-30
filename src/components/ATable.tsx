@@ -4,6 +4,7 @@ import type { ColumnsType } from 'antd/lib/table'
 import { useEffect, useState } from 'react'
 import { checkAuth } from '@/utils'
 import { useAppSelector } from '@/hooks/redux'
+import { useTranslation } from 'react-i18next'
 
 const { Option } = Select
 
@@ -21,6 +22,7 @@ type ATableProps = {
 
 const ATable: React.FC<ATableProps> = props => {
   const defaultWidth = 150
+  const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState<boolean>()
   const [tableData, setTableData] = useState<any>([])
   const [tableTotal, setTableTotal] = useState<number>(0)
@@ -84,7 +86,6 @@ const ATable: React.FC<ATableProps> = props => {
   const onPagerChange = (page: any, size: number) => {
     setPager({ page, size })
     fetchData(true, { page, size })
-    // fetchData(true, newPager)
   }
 
   const filterOptions = props.config.filterOptions?.map((config, index) => {
@@ -125,8 +126,8 @@ const ATable: React.FC<ATableProps> = props => {
               key={config.value}
               placeholder={config.placeholder ?? ''}
               value={filter[config.value]}
-              popupClassName="a-select-popup"
-              className="a-select"
+              popupClassName='a-select-popup'
+              className='a-select'
               onChange={(e: any) => setFilter({ ...filter, [config.value]: e })}
               onDropdownVisibleChange={(open: boolean) => open && fetchOptions(config.dynamic, config.optionName)}
             >
@@ -146,8 +147,8 @@ const ATable: React.FC<ATableProps> = props => {
               value={filter[config.value]}
               onChange={(e: any) => setFilter({ ...filter, [config.value]: e })}
               style={{ width: config.options?.width ?? defaultWidth }}
-              popupClassName="a-select-popup"
-              className="a-select"
+              popupClassName='a-select-popup'
+              className='a-select'
             >
               {(config.selections as SelectorOptionConfig[]).map((option: SelectorOptionConfig) => (
                 <Option value={option.value} key={option.value}>
@@ -163,27 +164,27 @@ const ATable: React.FC<ATableProps> = props => {
     }
 
     return (
-      <div className="filter-item" key={index}>
-        <div className="filter-label"> {config.label} </div>
-        <div className="filter-input">{inputElement}</div>
+      <div className='filter-item' key={index}>
+        <div className='filter-label'> {config.label} </div>
+        <div className='filter-input'>{inputElement}</div>
       </div>
     )
   })
 
   return (
-    <div className="a-table-container">
-      <div className="filter-container">
+    <div className='a-table-container'>
+      <div className='filter-container'>
         {filterOptions}
-        <Button onClick={resetFilter}> 重置 </Button>
-        <Button type="primary" onClick={fetchDataWithFilter}>
-          {' '}
-          查询{' '}
+        <Button onClick={resetFilter}> {t('table.reset')} </Button>
+        <Button type='primary' onClick={fetchDataWithFilter}>
+          &nbsp;
+          {t('table.search')}&nbsp;
         </Button>
       </div>
       {props.config.operation && (
-        <div className="operation-container">
-          <div className="title">{props.config.operation.title}</div>
-          <div className="btns">
+        <div className='operation-container'>
+          <div className='title'>{props.config.operation.title}</div>
+          <div className='btns'>
             {props.config.operation.buttons &&
               props.config.operation.buttons
                 .filter(v => !v.auth || checkAuth(user!.auth, v.auth))
@@ -196,7 +197,7 @@ const ATable: React.FC<ATableProps> = props => {
           </div>
         </div>
       )}
-      <div className="table-container">
+      <div className='table-container'>
         <Table
           scroll={{ x: 1100 }}
           columns={props.config.table.columns}

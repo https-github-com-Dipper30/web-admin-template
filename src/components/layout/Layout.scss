@@ -5,20 +5,15 @@ $collapsed-height: 40px;
 
 .layout-container {
   width: 100vw;
-  min-width: 600px;
   height: 100vh;
-  min-height: 600px;
   background-color: $surface2;
   position: relative;
   color: $text1;
   cursor: default;
   .header-container {
     height: $normal-height;
-    // width: calc(100vw - $normal-width);
     width: 100vw;
-    min-width: calc(540px + $normal-width);
     position: absolute;
-    // left: $normal-width;
     background-color: $surface2;
     display: flex;
     flex-direction: row;
@@ -54,7 +49,6 @@ $collapsed-height: 40px;
   .sider-container {
     width: $normal-width;
     height: calc(100vh - $normal-height);
-    min-height: 600px;
     position: absolute;
     top: $normal-height;
     background-color: $sider1;
@@ -64,11 +58,33 @@ $collapsed-height: 40px;
     flex-direction: column;
     justify-content: space-between;
     padding-top: 80px;
+    box-sizing: border-box;
     &.collapsed {
       width: $collapsed-width;
     }
     .sider-footer {
       padding: 10px 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .language-selector {
+        &:hover {
+          color: $prime1;
+        }
+        .language-drop-down-button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 4px;
+          &:hover {
+            cursor: pointer;
+          }
+          .text {
+            font-size: 13px;
+          }
+        }
+      }
       .theme-selector {
         width: 100%;
         text-align: right;
@@ -82,13 +98,11 @@ $collapsed-height: 40px;
   .content-container {
     width: calc(100vw - $normal-width);
     height: calc(100vh - $normal-height);
-    min-height: 560px;
-    min-width: 540px;
     position: absolute;
     top: $normal-height;
     left: $normal-width;
     padding: 20px 30px;
-    // overflow-y: scroll;
+    box-sizing: border-box;
     overflow-x: hidden;
     background-color: $surface2;
     transition: 0.4s ease;
@@ -99,4 +113,7 @@ $collapsed-height: 40px;
       width: calc(100vw - $collapsed-width);
     }
   }
+}
+.selected {
+  color: $prime1;
 }

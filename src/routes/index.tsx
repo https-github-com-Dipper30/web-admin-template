@@ -11,7 +11,8 @@ import Page404 from '@/components/common/404'
 import Loading from '@/components/common/Loading'
 import Passport from '@/pages/Passport'
 import useTheme from '@/hooks/useTheme'
-// import SettingRoutes from './SettingRoutes'
+import { getLocalStorage } from '@/utils/tools'
+import { STORAGE_KEY } from '@/config/constants'
 
 type RouteOption = {
   requireLogin?: boolean
@@ -36,7 +37,7 @@ const Router: React.FC = () => {
   const [theme, changeTheme] = useTheme()
 
   useEffect(() => {
-    const localTheme = localStorage.getItem('theme')
+    const localTheme = getLocalStorage(STORAGE_KEY.THEME)
     if ((localTheme && localTheme == 'dark') || (localTheme == 'light' && theme != localTheme)) {
       changeTheme(localTheme)
     } else if (!localTheme) {
@@ -44,7 +45,7 @@ const Router: React.FC = () => {
     }
   }, [theme])
 
-  const LayourRouter = (
+  const LayoutRouter = (
     <BeforeEnter options={{ requireLogin: true, requireRole: [1, 2] }}>
       <Layout>
         {' '}
@@ -56,12 +57,12 @@ const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/passport" element={<Passport />} />
-        <Route path="/" element={LayourRouter}>
+        <Route path='/passport' element={<Passport />} />
+        <Route path='/' element={LayoutRouter}>
           {/* home */}
           {/* routeBefore(Home, { requireLogin: true, requireRole: [1, 2] }) */}
           <Route index key={1} element={<Home />} />
-          <Route path="home" key={1} element={<Home />} />
+          <Route path='home' key={1} element={<Home />} />
 
           {/* user */}
           {UserRoutes()}
@@ -70,7 +71,7 @@ const Router: React.FC = () => {
           {AuthRoutes()}
         </Route>
 
-        <Route path="*" element={<Page404 />} />
+        <Route path='*' element={<Page404 />} />
       </Routes>
     </BrowserRouter>
   )
