@@ -1,17 +1,17 @@
-import { HomeOutlined, UserOutlined, KeyOutlined } from '@ant-design/icons'
-import { AuthCode, MenuPageCode } from '@/config/constants'
-import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
-import { useAppSelector } from './redux'
+import { HomeOutlined, UserOutlined, KeyOutlined } from '@ant-design/icons';
+import { AuthCode, MenuPageCode } from '@/config/constants';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from './redux';
 
 /**
  * 对面包屑导航和边栏选中样式做处理
  * @param {MenuPageCode} code
  */
 const useSiderMenu = () => {
-  const { t } = useTranslation()
-  const common = useAppSelector(store => store.common)
-  const [siderMenu, setSiderMenu] = useState<TSiderMenuItem[]>([])
+  const { t } = useTranslation();
+  const common = useAppSelector(store => store.common);
+  const [siderMenu, setSiderMenu] = useState<TSiderMenuItem[]>([]);
   useEffect(() => {
     setSiderMenu([
       {
@@ -63,10 +63,10 @@ const useSiderMenu = () => {
           },
         ],
       },
-    ])
-  }, [common.language])
+    ]);
+  }, [common.language]);
 
-  return [siderMenu]
-}
+  return [siderMenu];
+};
 
-export default useSiderMenu
+export default useSiderMenu;

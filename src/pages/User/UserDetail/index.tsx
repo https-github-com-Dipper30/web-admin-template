@@ -5,7 +5,7 @@ import { handleResult } from '@/utils'
 import { Button, Input } from 'antd'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { setUser as setUserAction } from '@/store/actions/user'
+import { setUser as setUserAction } from '@/stores/actions/user'
 import './index.scss'
 import { setLocalStorage } from '@/utils/tools'
 import { STORAGE_KEY } from '@/config/constants'
@@ -13,7 +13,7 @@ import { STORAGE_KEY } from '@/config/constants'
 const UserDetail: React.FC<any> = () => {
   const p = useParams()
   const [uid, setUid] = useState<number>()
-  const [user, setUser] = useState<TUserRowInfo>()
+  const [user, setUser] = useState<UserDetail>()
   const myInfo = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
   const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -33,7 +33,7 @@ const UserDetail: React.FC<any> = () => {
 
   const fetchUserInfo = async (id: number) => {
     const res = await configApi.getUserById(id)
-    if (handleResult(res) && res.data) {
+    if (handleResult(res)) {
       setUser(res.data)
     }
   }
@@ -72,6 +72,10 @@ const UserDetail: React.FC<any> = () => {
   const editSection = (
     <div className='user-info'>
       <div className='row'>
+        <div className='label'>用户ID</div>
+        <div className='value'>{user?.id}</div>
+      </div>
+      <div className='row'>
         <div className='label'>用户名</div>
         <div className='value'>
           <Input value={username} onInput={onUsernameInput} />
@@ -82,13 +86,13 @@ const UserDetail: React.FC<any> = () => {
           <div className='row'>
             <div className='label'>旧密码</div>
             <div className='value'>
-              <Input type='password' value={oldPassword} onInput={(e: any) => setOldPassword(e.target.value)} />
+              <Input.Password value={oldPassword} onInput={(e: any) => setOldPassword(e.target.value)} />
             </div>
           </div>
           <div className='row'>
             <div className='label'>新密码</div>
             <div className='value'>
-              <Input type='password' value={password} onInput={(e: any) => setPassword(e.target.value)} />
+              <Input.Password value={password} onInput={(e: any) => setPassword(e.target.value)} />
             </div>
           </div>
         </>
@@ -97,7 +101,7 @@ const UserDetail: React.FC<any> = () => {
       )}
       <div className='row'>
         <Button type='primary' onClick={onSubmitModification}>
-          &nbsp; 保存修改&nbsp;
+          保存修改
         </Button>
       </div>
     </div>

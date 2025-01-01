@@ -1,15 +1,16 @@
 import { configApi } from '@/api'
 import AAuthElement from '@/components/snippets/AAuthElement'
 import { errorMessage, handleResult } from '@/utils'
-import { Button, Checkbox, Col, Modal, Row, Table } from 'antd'
+import { Button, Checkbox, Col, Modal, Row, Select, Table } from 'antd'
 import { ColumnsType } from 'antd/lib/table'
 import { useEffect, useMemo, useState } from 'react'
 import './CheckAuthModal.scss'
 import { AuthCode } from '@/config/constants'
+import { UserRoleTag } from '@/components/snippets'
 
 type CheckAuthModalProps = {
   visible: boolean
-  userInfo: TUserRowInfo | undefined
+  userInfo: UserListItem
   closeModal: () => void
   setRefresh?: (refresh: boolean) => void
 }
@@ -42,13 +43,10 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
   // const [auth, setAuth] = useState<number[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [isEditing, setIsEditing] = useState<boolean>(false)
-  const [allAuth, setAllAuth] = useState<TAuthRowInfo[]>([])
+  const [allAuth, setAllAuth] = useState<AuthItem[]>([])
+  const [allRoles, setAllRoles] = useState<RoleItem[]>([])
+  const [newRole, setNewRole] = useState<number>()
   const [newAuth, setNewAuth] = useState<number[]>([])
-
-  const currentAuth = useMemo(() => {
-    if (!props.userInfo) return []
-    return props.userInfo.auth.map(a => ({ ...a, key: a.id }))
-  }, [props.userInfo])
 
   useEffect(() => {
     if (!props.userInfo) {
@@ -59,16 +57,18 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
   useEffect(() => {
     if (!props.visible) {
       setIsEditing(false)
+    } else {
+      fetchAllAuth()
     }
   }, [props.visible])
 
   const changeEditingStatus = () => {
     if (isEditing) {
-      setNewAuth([])
+      setNewRole(props.userInfo.role.id)
       setIsEditing(false)
     } else {
-      fetchAllAuth()
-      setNewAuth(currentAuth.map(a => a.id))
+      fetchAllRoles()
+      setNewRole(props.userInfo.role.id)
       setIsEditing(true)
     }
   }
@@ -79,24 +79,40 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
       setAllAuth(res.data.auth)
     }
   }
-
-  const onCheckAuth = (checkedAuth: any[]) => {
-    setNewAuth(checkedAuth)
+ 
+  const  fetchAllRoles = async () => {
+    const res = await configApi.getRoles()
+    if (handleResult(res)) {
+      setAllRoles(res.data.roles)
+    }
   }
 
   const onSubmit = async () => {
     // 参数校验
-    if (!newAuth) {
-      errorMessage('请勾选权限')
+    if (!newRole) {
+      errorMessage('请勾选身份')
       return
     }
-    setLoading(true)
-    const res = await configApi.updateUserAuth({ uid: props.userInfo?.id as number, auth: newAuth })
-    setLoading(false)
-    if (handleResult(res)) {
-      props.closeModal()
-      props.setRefresh && props.setRefresh(true)
+    if (loading) return 
+    try {
+      setLoading(true)
+      const res = await configApi.updateUserRole({ id: props.userInfo.id, rid: newRole })
+      if (handleResult(res)) {
+        props.closeModal()
+        props.setRefresh && props.setRefresh(true)
+      }
+    } catch (error) {
+      
+    } finally {
+
+      setLoading(false)
     }
+   
+    
+  }
+
+  const onRoleChange = (rid: number) => {
+setNewRole(rid)
   }
 
   const readOnlySection = (
@@ -111,21 +127,29 @@ const CheckAuthModal: React.FC<CheckAuthModalProps> = props => {
         <div className='input'>{props.userInfo?.username}</div>
       </div>
 
-      <Table columns={columns} dataSource={currentAuth} pagination={false} />
+      <div className='row'>
+        <div className='label'> 用户角色 </div>
+        <div className='input'> <UserRoleTag role={props.userInfo!.role}></UserRoleTag></div>
+      </div>
+
+      <Table columns={columns} dataSource={allAuth} pagination={false} />
     </>
   )
 
   const editSection = (
     <div className='auth-selector-list'>
-      <Checkbox.Group defaultValue={newAuth} style={{ width: '100%' }} onChange={onCheckAuth}>
-        {allAuth.map(a => (
-          <Row key={a.id}>
-            <Col>
-              <Checkbox value={a.id}>{`${a.name} # ${a.id}`}</Checkbox>
-            </Col>
-          </Row>
+      <div >
+        <Select options={allRoles.map(r=>({
+          value: r.id,
+          label: r.description || r.name,
+        }))} onChange={onRoleChange} style={{width: '200px'}} value={newRole} />
+      </div>
+      <div className='flex flex-col gap-1 my-4'>
+
+        {allAuth.map((a,i) => (
+          <div className='auth-name '>{i+1}. {`${a.name} # ${a.id}`}</div>
         ))}
-      </Checkbox.Group>
+        </div>
     </div>
   )
 

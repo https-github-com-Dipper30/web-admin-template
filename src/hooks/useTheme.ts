@@ -1,21 +1,21 @@
-import { themeColors } from '@/config/theme'
-import { changeTheme as changeThemeAction } from '@/store/actions/common'
-import { useAppDispatch, useAppSelector } from './redux'
+import { themeColors } from '@/config/theme';
+import { changeTheme as changeThemeAction } from '@/stores/actions/common';
+import { useAppDispatch, useAppSelector } from './redux';
 
 const useTheme = () => {
-  const theme = useAppSelector(state => state.common.theme)
-  const dispatch = useAppDispatch()
+  const theme = useAppSelector(state => state.common.theme);
+  const dispatch = useAppDispatch();
 
-  const changeTheme = (newTheme: Theme) => {
-    const body = document.getElementsByTagName('body')[0]
-    const colorSettings = themeColors[newTheme]
+  const changeTheme = (newTheme: keyof TThemeType) => {
+    const body = document.getElementsByTagName('body')[0];
+    const colorSettings = themeColors[newTheme];
     for (const key in colorSettings) {
-      body.style.setProperty(`--${key}`, colorSettings[key as keyof TThemeProperty])
+      body.style.setProperty(`--${key}`, colorSettings[key as keyof TThemeProperty]);
     }
-    dispatch(changeThemeAction(newTheme))
-  }
+    dispatch(changeThemeAction(newTheme));
+  };
 
-  return [theme, changeTheme] as const
-}
+  return [theme, changeTheme] as const;
+};
 
-export default useTheme
+export default useTheme;

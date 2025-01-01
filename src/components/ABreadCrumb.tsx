@@ -2,7 +2,7 @@ import { HomeOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import './ABreadCrumb.scss'
 import { useAppDispatch } from '@/hooks/redux'
-import { selectMenu } from '@/store/actions/common'
+import { selectMenu } from '@/stores/actions/common'
 
 type ABreadCrumbProps = {
   config: ABreadCrumbConfig[]

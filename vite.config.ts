@@ -1,18 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import vitePluginImp from 'vite-plugin-imp'
-import { ViteAliases } from 'vite-aliases'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import vitePluginImp from 'vite-plugin-imp';
+import path from 'path';
+import tailwindcss from 'tailwindcss';
 
-const publicDirMap = {
-  'development': 'dev',
-  'test': 'test',
-  'simulation': 'sim',
-  'production': 'prod',
-}
-
-// https://vitejs.dev/config/
-export default ({ mode }) => defineConfig({
+// https://vite.dev/config/
+export default defineConfig({
   plugins: [
     react(),
     vitePluginImp({
@@ -21,11 +14,10 @@ export default ({ mode }) => defineConfig({
         {
           libName: 'antd',
           libDirectory: 'es',
-          style: (name) => `antd/es/${name}/style`,
+          style: name => `antd/es/${name}/style`,
         },
       ],
     }),
-    ViteAliases(),
   ],
   resolve: {
     alias: {
@@ -33,17 +25,18 @@ export default ({ mode }) => defineConfig({
     },
   },
   css: {
+    postcss: {
+      plugins: [tailwindcss],
+    },
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/css/global.scss";',
+        api: 'modern-compiler',
+        additionalData: '@use "@/css/global" as *;',
       },
       less: {
         javascriptEnabled: true,
       },
     },
   },
-  build: {
-    outDir: publicDirMap[mode] || 'prod',
-  },
   envPrefix: 'APTX_', // 设置env文件可见变量默认前缀
-})
+});

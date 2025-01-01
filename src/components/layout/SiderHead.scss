@@ -1,4 +1,4 @@
-@import './Layout.scss';
+@use './Layout.scss' as *;
 
 .sider-head-container {
   display: flex;

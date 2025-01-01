@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './SiderMenuItem.scss'
 import { RightOutlined, DownOutlined } from '@ant-design/icons'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { selectMenu } from '@/store/actions/common'
+import { selectMenu } from '@/stores/actions/common'
 import { findMenu } from '@/utils/tools'
 import { MenuPageCode } from '@/config/constants'
 
