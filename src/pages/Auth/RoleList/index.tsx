@@ -1,36 +1,36 @@
-import { Button, Popconfirm } from 'antd'
-import { DeleteOutlined } from '@ant-design/icons'
-import './index.scss'
-import ABreadCrumb from '@/components/ABreadCrumb'
-import ATable from '@/components/ATable'
-import { ColumnsType } from 'antd/lib/table'
-import AAuthElement from '@/components/snippets/AAuthElement'
-import { useState } from 'react'
-import { configApi } from '@/api'
-import { handleResult } from '@/utils'
-import AddModal from './AddModal'
-import EditModal from './EditModal'
-import usePageCode from '@/hooks/usePageCode'
-import { AuthCode, MenuPageCode } from '@/config/constants'
-import useSiderMenu from '@/hooks/useSiderMenu'
+import { Button, Popconfirm } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import './index.scss';
+import ABreadCrumb from '@/components/ABreadCrumb';
+import ATable from '@/components/ATable';
+import { ColumnsType } from 'antd/lib/table';
+import AAuthElement from '@/components/snippets/AAuthElement';
+import { useState } from 'react';
+import { configApi } from '@/api';
+import { handleResult } from '@/utils';
+import AddModal from './AddModal';
+import EditModal from './EditModal';
+import usePageCode from '@/hooks/usePageCode';
+import { AuthCode, MenuPageCode } from '@/config/constants';
+import useSiderMenu from '@/hooks/useSiderMenu';
 
 const RoleList: React.FC<any> = () => {
-  const [refresh, setRefresh] = useState<boolean>(false)
-  const [addModalVisible, setAddModalVisible] = useState<boolean>(false)
-  const [editModalVisible, setEditModalVisible] = useState<boolean>(false)
-  const [currentRow, setCurrentRow] = useState<TRoleRowInfo>()
+  const [refresh, setRefresh] = useState<boolean>(false);
+  const [addModalVisible, setAddModalVisible] = useState<boolean>(false);
+  const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<RoleItem>();
 
-  const [menu] = useSiderMenu()
-  const breadcrumb = usePageCode(MenuPageCode.ROLE_LIST, menu)
+  const [menu] = useSiderMenu();
+  const breadcrumb = usePageCode(MenuPageCode.ROLE_LIST, menu);
 
-  const columnsConfig: ColumnsType<any> = [
+  const columnsConfig: ColumnsType<RoleItem> = [
     {
       title: '',
       key: 'index',
       width: 50,
       fixed: 'left',
       ellipsis: true,
-      render: (item: any, record: any, index: number) => <>{index + 1}</>,
+      render: (item: any, record, index: number) => <>{index + 1}</>,
     },
     {
       title: 'ID',
@@ -91,7 +91,7 @@ const RoleList: React.FC<any> = () => {
         </div>
       ),
     },
-  ]
+  ];
 
   const config: ATableConfig = {
     filter: {},
@@ -120,31 +120,32 @@ const RoleList: React.FC<any> = () => {
       indexed: false,
       columns: columnsConfig,
     },
-  }
+  };
 
   const fetchData = async (filter: { id?: number }) => {
-    const res = await configApi.getRoles(filter)
-    if (!handleResult(res)) return { data: [], total: 0 }
+    const res = await configApi.getRoles(filter);
+    if (!handleResult(res)) return { data: [], total: 0 };
     const data = res.data.roles.map((v: any) => ({
       ...v,
+
       key: v.id,
-    }))
-    return { data, total: data.length }
-  }
+    }));
+    return { data, total: data.length };
+  };
 
   const onEditingAuth = (row: any) => {
-    setCurrentRow(row)
-    if (!editModalVisible) setEditModalVisible(true)
-  }
+    setCurrentRow(row);
+    if (!editModalVisible) setEditModalVisible(true);
+  };
 
   const deleteRole = async (id: number) => {
-    const res = await configApi.deleteRoleById({ id })
+    const res = await configApi.deleteRoleById({ id });
     if (!handleResult(res)) {
-      setRefresh(true)
+      setRefresh(true);
     }
-  }
+  };
 
-  const showAddModal = () => setAddModalVisible(true)
+  const showAddModal = () => setAddModalVisible(true);
 
   return (
     <div className='role-list-page'>
@@ -169,7 +170,7 @@ const RoleList: React.FC<any> = () => {
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default RoleList
+export default RoleList;

@@ -1,8 +1,8 @@
-import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import './index.scss'
-import store from '@/store'
-import App from './App'
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import './index.scss';
+import store from '@/stores';
+import App from './App';
 
 const text = `
                aaaa                 ppppppppppppp        tttttttttttttttttttt      xxxxx        xxxxxx
@@ -17,13 +17,13 @@ const text = `
       aaa                 aaa       pp                           ttt               xxxx           xxxxxx
 
       --- Admin Template
-`
+`;
 
 // eslint-disable-next-line no-console
-console.log(text)
+console.log(text);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <App />
   </Provider>,
-)
+);

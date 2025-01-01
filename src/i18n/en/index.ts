@@ -1,10 +1,10 @@
-import basic from './basic.json'
-import home from './home.json'
+import basic from './basic.json';
+import home from './home.json';
 
 const resources = {
   ...basic,
   basic,
   home,
-}
+};
 
-export default resources
+export default resources;

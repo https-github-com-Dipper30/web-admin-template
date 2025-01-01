@@ -47,24 +47,24 @@ type ChartOptions = {
   yData?: number[]
 }
 
-let timer: any = null
+// let timer: any = null
 
 const Home: React.FC<any> = () => {
-  const [currentActiveUsers, setCurrentActiveUsers] = useState<TUserProfile[]>([])
+  const [currentActiveUsers, setCurrentActiveUsers] = useState<UserListItem[]>([])
   const dauChart = useRef<any>()
   const mauChart = useRef<any>()
 
-  // const queryCurrentActiveUsers = useInterval(homeApi.getCurrentActiveUsers, 5000, [])
-  useEffect(() => {
-    timer = setInterval(() => {
-      queryCurrentActiveUsers()
-    }, 5000)
-    return () => {
-      clearInterval(timer)
-    }
-  }, [])
+  // useEffect(() => {
+  //   timer = setInterval(() => {
+  //     queryCurrentActiveUsers()
+  //   }, 5000)
+  //   return () => {
+  //     clearInterval(timer)
+  //   }
+  // }, [])
 
   useEffect(() => {
+    queryCurrentActiveUsers()
     initDiagram()
   }, [])
 

@@ -1,59 +1,59 @@
-import { message } from 'antd'
-import reduxStore from '../store'
+import { message } from 'antd';
+import reduxStore from '../stores';
 
 /**
  * 获取环境
  * @returns {ProcessEnv}
  */
-export const getEnv = () => import.meta.env.MODE
+export const getEnv = () => import.meta.env.MODE;
 
 export const successMessage = (msg: string, duration?: number) => {
-  message.success(msg, duration ?? 3)
-}
+  message.success(msg, duration ?? 3);
+};
 
 export const errorMessage = (msg: string, duration?: number) => {
-  message.error(msg, duration ?? 3)
-}
+  message.error(msg, duration ?? 3);
+};
 
 export const warningMessage = (msg: string, duration?: number) => {
-  message.warning(msg, duration ?? 3)
-}
+  message.warning(msg, duration ?? 3);
+};
 
 export const infoMessage = (msg: string, duration?: number) => {
-  message.info(msg, duration ?? 3)
-}
+  message.info(msg, duration ?? 3);
+};
 
 export const getToken = () => {
-  return localStorage.getItem('token') || null
-}
+  return localStorage.getItem('token') || null;
+};
 
 export const isSignedIn = (): boolean => {
-  const store = reduxStore.getState()
-  return Boolean(store.user && store.user?.id > 0)
-}
+  const store = reduxStore.getState();
+  return Boolean(store.user && store.user?.id > 0);
+};
 
-export const getUser = (): LoginUserData | null => {
-  const store = reduxStore.getState()
-  return store.user
-}
+export const getUser = (): UserDetail | null => {
+  const store = reduxStore.getState();
+  return store.user;
+};
 
 export const getDispatch = () => {
-  return reduxStore.dispatch
-}
+  return reduxStore.dispatch;
+};
 
 export const checkAuth = (userAuth: number[], toCheck: number[]): boolean => {
   for (const auth of toCheck) {
-    if (!userAuth.includes(auth)) return false
+    if (!userAuth.includes(auth)) return false;
   }
-  return true
-}
+  return true;
+};
 
 type HandleResultOptions = {
-  notifySuccess?: boolean
-  notifyError?: boolean
-  successMessage?: string
-  errorMessage?: string
-}
+  notifySuccess?: boolean;
+  notifyError?: boolean;
+  successMessage?: string;
+  errorMessage?: string;
+};
 
 /**
  * check if the result from request is instance of Error
@@ -63,7 +63,7 @@ type HandleResultOptions = {
  * @param {boolean} notifySuccess
  * @returns
  */
-export const handleResult = <T>(
+export const handleResult = <T = any>(
   res: APIResponse<T>,
   options: HandleResultOptions = {
     notifyError: true,
@@ -72,75 +72,66 @@ export const handleResult = <T>(
     errorMessage: '',
   },
 ) => {
-  if (isError(res)) {
-    if (options.notifyError !== false) errorMessage(options.errorMessage || res.msg)
-    return false
+  const isErrorRes = !res.success;
+  if (isErrorRes && !res.hideMsg) {
+    if (options.notifyError !== false) errorMessage(options.errorMessage || res.msg || res.errMsg || 'Internal Error');
   } else {
-    if (options.notifySuccess) {
-      successMessage(options.successMessage || res.msg)
+    if (options.notifySuccess || options.successMessage) {
+      successMessage(options.successMessage || res.msg);
     }
-    return true
   }
-}
-
-/**
- * check if the parameter is an Error
- * @param {APIResponse} res
- * @returns boolean
- */
-export const isError = (res: APIResponse<any>) => {
-  return res?.code != 200 && res?.code != 201
-}
+  return !isErrorRes;
+};
 
 export const createImage = async (imgSrc: string): Promise<CanvasImageSource> => {
-  const image = new Image()
+  const image = new Image();
 
   return new Promise(resolve => {
-    image.src = imgSrc
-    setTimeout(() => resolve(image), 10)
-  })
-}
+    image.src = imgSrc;
+    setTimeout(() => resolve(image), 10);
+  });
+};
 
 export const isObject = (obj: any): boolean => {
-  return Object.prototype.toString.call(obj) == '[object Object]'
-}
+  return Object.prototype.toString.call(obj) == '[object Object]';
+};
 
 export const isArray = (arr: any): boolean => {
-  return Object.prototype.toString.call(arr) == '[object Array]'
-}
+  return Object.prototype.toString.call(arr) == '[object Array]';
+};
 
 export const deepClone: <T>(obj: T) => T = obj => {
   if (!isObject(obj) && !isArray(obj)) {
-    return obj
+    return obj;
   }
   if (isArray(obj)) {
-    const arr: any = []
+    const arr: any = [];
     for (const o of obj as any) {
-      arr.push(deepClone(o))
+      arr.push(deepClone(o));
     }
-    return arr
+    return arr;
   }
   if (isObject(obj)) {
-    const o: any = {}
+    const o: any = {};
     for (const key in obj) {
-      o[key] = deepClone(obj[key])
+      o[key] = deepClone(obj[key]);
     }
-    return o
+    return o;
   }
-  return obj
-}
+  return obj;
+};
 
 export const uniqueArr: <T>(arr: T[], key?: keyof T) => T[] = (arr, key) => {
-  if (!arr) return arr
-  if (key === undefined) return [...new Set(arr)]
-  const set = new Set()
-  const init: typeof arr = []
+  if (!arr) return arr;
+  if (key === undefined) return [...new Set(arr)];
+  const set = new Set();
+  const init: typeof arr = [];
   const newArr = arr.reduce((prev, current) => {
     if (!set.has(current[key])) {
-      set.add(current[key])
-      prev.push(current)
+      set.add(current[key]);
+      prev.push(current);
     }
-    return prev
-  }, init)
-  return newArr
-}
+    return prev;
+  }, init);
+  return newArr;
+};

@@ -1,8 +1,10 @@
-import { Button, Popconfirm } from 'antd'
-import './index.scss'
-import UserTag from '../UserTag'
-import type { ColumnsType } from 'antd/lib/table'
 import { useState } from 'react'
+import type { ColumnsType } from 'antd/lib/table'
+import { Button, Popconfirm } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { DeleteOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
+import './index.scss'
 import { configApi } from '@/api'
 import { handleResult } from '@/utils'
 import ABreadCrumb from '@/components/ABreadCrumb'
@@ -10,33 +12,31 @@ import ATable from '@/components/ATable'
 import { generateDateByTs } from '@/utils/tools'
 import CheckAuthModal from './CheckAuthModal'
 import AddUserModal from './AddUserModal'
-import { useNavigate } from 'react-router-dom'
 import AAuthElement from '@/components/snippets/AAuthElement'
-import { DeleteOutlined } from '@ant-design/icons'
 import usePageCode from '@/hooks/usePageCode'
 import { AuthCode, MenuPageCode } from '@/config/constants'
 import useSiderMenu from '@/hooks/useSiderMenu'
-import { useTranslation } from 'react-i18next'
+import { UserRoleTag } from '@/components/snippets'
 
 const UserList: React.FC<any> = () => {
   const { t } = useTranslation()
   const [refresh, setRefresh] = useState<boolean>(false)
   const [addModalVisible, setAddModalVisible] = useState<boolean>(false)
   const [checkAuthModalVisible, setCheckAuthModalVisible] = useState<boolean>(false)
-  const [currentRow, setCurrentRow] = useState<TUserRowInfo>()
+  const [currentRow, setCurrentRow] = useState<UserListItem>()
   const navigate = useNavigate()
 
   const [menu] = useSiderMenu()
   const breadcrumb = usePageCode(MenuPageCode.USER_LIST, menu)
 
-  const columnsConfig: ColumnsType<any> = [
+  const columnsConfig: ColumnsType<UserListItem> = [
     {
       title: '',
       dataIndex: 'id',
       key: 'index',
       width: 50,
       fixed: 'left',
-      render: (item: any, record: any, index: number) => <>{index + 1}</>,
+      render: (item, record, index: number) => <>{index + 1}</>,
     },
     {
       title: 'ID',
@@ -45,12 +45,12 @@ const UserList: React.FC<any> = () => {
       width: 50,
       render: (text: number) => <a>{text}</a>,
     },
-    {
-      title: t('table-data.email'),
-      width: 100,
-      dataIndex: 'email',
-      key: 'email',
-    },
+    // {
+    //   title: t('table-data.email'),
+    //   width: 100,
+    //   dataIndex: 'email',
+    //   key: 'email',
+    // },
     {
       title: t('table-data.username'),
       width: 100,
@@ -62,7 +62,7 @@ const UserList: React.FC<any> = () => {
       dataIndex: 'role',
       key: 'role',
       width: 100,
-      render: (role: { id: number; name: string }) => <UserTag role={role} />,
+      render: (role: { id: number; name: string }) => <UserRoleTag role={role} />,
     },
     {
       title: t('table-data.created-at'),
@@ -92,9 +92,9 @@ const UserList: React.FC<any> = () => {
     {
       title: t('table.options'),
       key: 'options',
-      width: 100,
+      width: 120,
       fixed: 'right',
-      render: (row: TUserRowInfo) => (
+      render: (row: UserListItem) => (
         <div className='a-table-options'>
           <Button className='a-table-option-col' onClick={() => checkAuth(row)}>
             &nbsp;{t('table.check-auth')} &nbsp;
@@ -139,7 +139,6 @@ const UserList: React.FC<any> = () => {
         type: 'selector',
         label: t('table-data.user-role'),
         placeholder: t('table-data.user-role-pl'),
-        prop: 'id',
         value: 'rid',
         dynamic: 'getRoles',
         optionName: 'option1',
@@ -166,7 +165,7 @@ const UserList: React.FC<any> = () => {
 
   const showAddModal = () => setAddModalVisible(true)
 
-  const checkAuth = (row: TUserRowInfo) => {
+  const checkAuth = (row: UserListItem) => {
     setCurrentRow(row)
     setCheckAuthModalVisible(true)
   }
@@ -206,12 +205,14 @@ const UserList: React.FC<any> = () => {
 
       <AddUserModal visible={addModalVisible} closeModal={() => setAddModalVisible(false)} setRefresh={setRefresh} />
 
-      <CheckAuthModal
-        visible={checkAuthModalVisible}
-        userInfo={currentRow}
-        closeModal={() => setCheckAuthModalVisible(false)}
-        setRefresh={setRefresh}
-      />
+      {currentRow && (
+        <CheckAuthModal
+          visible={checkAuthModalVisible}
+          userInfo={currentRow}
+          closeModal={() => setCheckAuthModalVisible(false)}
+          setRefresh={setRefresh}
+        />
+      )}
 
       <ATable
         config={config}

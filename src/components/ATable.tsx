@@ -1,6 +1,5 @@
 import './ATable.scss'
 import { Table, Select, InputNumber, Button, Pagination, Input } from 'antd'
-import type { ColumnsType } from 'antd/lib/table'
 import { useEffect, useState } from 'react'
 import { checkAuth } from '@/utils'
 import { useAppSelector } from '@/hooks/redux'
@@ -10,7 +9,6 @@ const { Option } = Select
 
 type ATableProps = {
   config: ATableConfig
-  columns?: ColumnsType<any>
   data?: any[]
   fetchData: (p?: any) => Promise<{ data: any[]; total: number }>
   fns: any
@@ -32,7 +30,7 @@ const ATable: React.FC<ATableProps> = props => {
     option2: [],
     option3: [],
   })
-  const [pager, setPager] = useState<TPager>({ page: 1, size: 20 })
+  const [pager, setPager] = useState<Pagination>({ page: 1, size: 20 })
   // const [currentPage, setCurrentPage] = useState<number>(1)
   const user = useAppSelector(state => state.user)
 
@@ -46,7 +44,7 @@ const ATable: React.FC<ATableProps> = props => {
     if (props.refresh === true) fetchData(true, pager)
   }, [props.refresh])
 
-  const fetchData = async (withFilter: boolean = false, pager?: Pager) => {
+  const fetchData = async (withFilter: boolean = false, pager?: Pagination) => {
     props.setRefresh && props.setRefresh(false)
     setIsLoading(true)
     const p: any = {}
@@ -205,8 +203,9 @@ const ATable: React.FC<ATableProps> = props => {
           pagination={false}
           loading={isLoading}
         />
-        {props.pagination && (
+        {props.pagination && tableTotal > pager.size && (
           <Pagination
+            className='justify-end'
             showSizeChanger
             current={pager.page}
             defaultPageSize={pager.size}

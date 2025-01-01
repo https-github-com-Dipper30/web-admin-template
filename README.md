@@ -1,28 +1,14 @@
-# web-admin-template
+# react-crm-template
+CRM platform  template based on React
 
-React.js + Typescript + i18n + react-redux + antd
+## Quick Start
 
-# Get Started
+1. create file .env.loc
 
-## Install NPM
-
-```shell
-npm install
+``` text
+APTX_BASE_URL=http://localhost:3000
 ```
 
-## Build Env File
+2. npm i
 
-Create file '.env.development'.
-Paste and modify codes below.
-
-```shell
-# config
-APTX_BASE_URL=http://localhost:3030
-APTX_OUTPUT_DIR=dev
-```
-
-## Run Project
-
-```shell
-npm run dev
-```
+3. npm run local

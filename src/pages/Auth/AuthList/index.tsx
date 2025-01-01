@@ -19,7 +19,7 @@ const AuthList: React.FC<any> = () => {
   const [refresh, setRefresh] = useState<boolean>(false)
   const [addModalVisible, setAddModalVisible] = useState<boolean>(false)
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false)
-  const [currentRow, setCurrentRow] = useState<TAuthRowInfo>()
+  const [currentRow, setCurrentRow] = useState<AuthItem>()
 
   const [menu] = useSiderMenu()
   const breadcrumb = usePageCode(MenuPageCode.AUTH_LIST, menu)

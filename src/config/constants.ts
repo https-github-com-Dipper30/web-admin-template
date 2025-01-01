@@ -1,4 +1,4 @@
-export const DEFAULT_PAGE_ROUTE = '/app/me'
+export const DEFAULT_PAGE_ROUTE = '/app/me';
 
 export enum PROCESS_ENV {
   DEVELOPMENT = 'development',

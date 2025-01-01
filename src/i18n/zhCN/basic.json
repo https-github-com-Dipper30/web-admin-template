@@ -4,6 +4,7 @@
   "password": "密码",
   "day": "白天",
   "night": "黑夜",
+  "logout": "登出",
   "lang": {
     "en": "英语",
     "zhCN": "简体中文",

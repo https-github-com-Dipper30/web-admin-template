@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 
 type EditModalProps = {
   visible: boolean
-  roleInfo: TRoleRowInfo | undefined
+  roleInfo: RoleItem | undefined
   closeModal: () => void
   setRefresh: (refresh: boolean) => void
 }
@@ -34,19 +34,23 @@ const EditModal: React.FC<EditModalProps> = props => {
       errorMessage('请填写name')
       return
     }
-    if (!props.roleInfo) return
-    setLoading(true)
-    const res = await configApi.updateRoleById({
-      id: props.roleInfo.id,
-      name,
-      description,
-      auth,
-    })
-    setLoading(false)
-    if (handleResult(res)) {
-      props.closeModal()
-      props.setRefresh(true)
+    if (!props.roleInfo || loading) return
+    try {
+      setLoading(true)
+      const res = await configApi.updateRoleById({
+        id: props.roleInfo.id,
+        name,
+        description,
+        auth,
+      })
+      if (handleResult(res)) {
+        props.closeModal()
+        props.setRefresh(true)
+      }
+    } finally {
+      setLoading(false)
     }
+   
   }
 
   const onCheckAuth = async (auth: any[]) => {
@@ -62,7 +66,7 @@ const EditModal: React.FC<EditModalProps> = props => {
 
   return (
     <Modal
-      title='编辑权限'
+      title='编辑角色'
       open={props.visible}
       onCancel={props.closeModal}
       footer={[

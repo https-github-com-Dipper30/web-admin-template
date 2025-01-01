@@ -4,6 +4,7 @@
   "password": "Password",
   "day": "day",
   "night": "night",
+  "logout": "Log Out",
   "lang": {
     "en": "English",
     "zhCN": "Simplified Chinese",

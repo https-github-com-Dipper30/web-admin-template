@@ -1,9 +1,9 @@
 import { configApi } from '@/api'
 import Loading from '@/components/common/Loading'
 import { STORAGE_KEY } from '@/config/constants'
-import { setUser } from '@/store/actions/user'
+import { setUser } from '@/stores/actions/user'
 import { isSignedIn, handleResult } from '@/utils'
-import { setLocalStorage } from '@/utils/tools'
+import { getLocalStorage, setLocalStorage } from '@/utils/tools'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -35,7 +35,7 @@ const BeforeEnter: React.FC<BeforeEnterProps> = props => {
   useEffect(() => {
     if (props?.options?.requireLogin !== false && !isSignedIn()) {
       // 检查本地token
-      if (localStorage.getItem('token')) {
+      if (getLocalStorage(STORAGE_KEY.TOKEN)) {
         autoLogin()
       } else {
         relogin()

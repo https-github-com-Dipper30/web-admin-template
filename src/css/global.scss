@@ -1,7 +1,10 @@
-@font-face {
-  font-family: 'aptxfont';
-  src: url('../assets/fonts/AaWeiTaNingMengCha-2.ttf') format('ttf');
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
 
 // $surface: var(--surface, #111);
 // $surface1: var(--surface1, #1e1e1e);
@@ -33,6 +36,7 @@ $surface_hover_dark: var(--surface_hover_dark, '#141414');
 $surface_hover_light: var(--surface_hover_light, '#ffffff');
 
 $text1: var(--text1, '#141414');
+$text1_hover: var(--text1_hover, '#141414');
 $text2: var(--text2, '#141414');
 $text3: var(--text3, '#141414');
 
@@ -71,8 +75,19 @@ $header-height: 60px;
 
 body {
   margin: 0;
-  font-family: 'aptxfont', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'aptxfont',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -91,7 +106,9 @@ code {
 
 // 对所有颜色变化做transition处理
 .color-mode-transition {
-  transition: color 0.4s ease, background-color 0.4s ease;
+  transition:
+    color 0.4s ease,
+    background-color 0.4s ease;
 }
 
 .delete-icon {
@@ -106,10 +123,11 @@ code {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  .a-table-option-col {
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
+  gap: 16px;
+  // .a-table-option-col {
+  //   margin-right: 10px;
+  //   margin-bottom: 10px;
+  // }
 }
 .ant-table {
   // table scrollbar
@@ -378,6 +396,13 @@ code {
   .ant-input-number-input {
     color: $text1;
   }
+}
+
+.ant-pagination .ant-pagination-next .ant-pagination-item-link {
+  color: $text2 !important;
+}
+.ant-pagination .ant-pagination-disabled .ant-pagination-item-link {
+  color: $text1_hover !important;
 }
 
 .ant-modal {
