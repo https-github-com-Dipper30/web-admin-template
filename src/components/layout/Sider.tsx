@@ -1,39 +1,39 @@
-import { useCallback, useMemo } from 'react'
-import { Dropdown, MenuProps, Switch } from 'antd'
-import SiderHead from './SiderHead'
-import SiderMenuItem from './SiderMenuItem'
-import useTheme from '@/hooks/useTheme'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { LANGUAGE } from '@/config/constants'
-import { useTranslation } from 'react-i18next'
-import { GlobalOutlined } from '@ant-design/icons'
-import { changeLanguage as changeLanguageAction } from '@/stores/actions/common'
-import { changeLanguage } from 'i18next'
-import useSiderMenu from '@/hooks/useSiderMenu'
+import { useCallback, useMemo } from 'react';
+import { Dropdown, MenuProps, Switch } from 'antd';
+import SiderHead from './SiderHead';
+import SiderMenuItem from './SiderMenuItem';
+import useTheme from '@/hooks/useTheme';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { LANGUAGE } from '@/config/constants';
+import { useTranslation } from 'react-i18next';
+import { GlobalOutlined } from '@ant-design/icons';
+import { changeLanguage as changeLanguageAction } from '@/stores/actions/common';
+import { changeLanguage } from 'i18next';
+import useSiderMenu from '@/hooks/useSiderMenu';
 
 type SiderProps = {
-  collapsed: boolean
-}
+  collapsed: boolean;
+};
 
 const Sider: React.FC<SiderProps> = props => {
-  const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const common = useAppSelector(store => store.common)
-  const [theme, changeTheme] = useTheme()
-  const auth: number[] = useAppSelector(state => state.user?.auth || [])
-  const [rawMenu] = useSiderMenu()
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const common = useAppSelector(store => store.common);
+  const [theme, changeTheme] = useTheme();
+  const auth: number[] = useAppSelector(state => state.user?.auth || []);
+  const [rawMenu] = useSiderMenu();
 
   const shakeMenu = useCallback(
     (menu: any[]) => {
-      const n = []
+      const n = [];
       for (const item of menu) {
         // 判断是否有权限
-        let hasAccess = true
+        let hasAccess = true;
         if (item.auth) {
           for (const authToCheck of item.auth) {
             if (!auth.includes(authToCheck)) {
-              hasAccess = false
-              break
+              hasAccess = false;
+              break;
             }
           }
         }
@@ -45,31 +45,31 @@ const Sider: React.FC<SiderProps> = props => {
             auth: item.auth,
             path: item.path,
             abbr: item.abbr,
-          }
+          };
           if (item.children) {
-            menuItem.children = shakeMenu(item.children)
+            menuItem.children = shakeMenu(item.children);
           }
-          n.push(menuItem)
+          n.push(menuItem);
         }
       }
-      return n
+      return n;
     },
     [rawMenu],
-  )
+  );
 
   const menu = useMemo(() => {
-    const res = shakeMenu(rawMenu)
-    return res
-  }, [rawMenu])
+    const res = shakeMenu(rawMenu);
+    return res;
+  }, [rawMenu]);
 
   const handleChangeTheme = (checked: boolean) => {
-    changeTheme(checked ? 'dark' : 'light')
-  }
+    changeTheme(checked ? 'dark' : 'light');
+  };
 
   const switchLanguage = (lang: LANGUAGE) => {
-    changeLanguage(lang)
-    dispatch(changeLanguageAction(lang))
-  }
+    changeLanguage(lang);
+    dispatch(changeLanguageAction(lang));
+  };
 
   const languages: MenuProps['items'] = [
     {
@@ -91,23 +91,11 @@ const Sider: React.FC<SiderProps> = props => {
       ),
       key: LANGUAGE.ZH_CN,
     },
-    {
-      label: (
-        <div
-          className={common.language === LANGUAGE.ZH_TW ? 'selected' : ''}
-          onClick={() => switchLanguage(LANGUAGE.ZH_TW)}
-        >
-          {t('lang.zhTW')}
-        </div>
-      ),
-      key: LANGUAGE.ZH_TW,
-    },
-  ]
+  ];
   const languageAbbre = useMemo(() => {
-    if (common.language === LANGUAGE.ZH_CN) return t('lang.zhCN-abbre')
-    if (common.language === LANGUAGE.ZH_TW) return t('lang.zhTW-abbre')
-    return t('lang.en-abbre')
-  }, [common.language])
+    if (common.language === LANGUAGE.ZH_CN) return t('lang.zhCN-abbre');
+    return t('lang.en-abbre');
+  }, [common.language]);
 
   return (
     <div className={`sider-container${props.collapsed ? ' collapsed' : ''}`}>
@@ -136,7 +124,7 @@ const Sider: React.FC<SiderProps> = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sider
+export default Sider;

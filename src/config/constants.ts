@@ -10,7 +10,6 @@ export enum PROCESS_ENV {
 export enum LANGUAGE {
   EN = 'en',
   ZH_CN = 'zhCN',
-  ZH_TW = 'zhTW',
 }
 
 export const enum MenuPageCode {
