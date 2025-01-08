@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './en';
 import zhCN from './zhCN';
-import zhTW from './zhTW';
 import { getLocalLanguage } from '@/utils/tools';
 
 export const resources = {
@@ -11,9 +10,6 @@ export const resources = {
   },
   zhCN: {
     translation: zhCN,
-  },
-  zhTW: {
-    translation: zhTW,
   },
 };
 
